@@ -1,0 +1,93 @@
+/** ---------------------------------------------------------------------
+ * Author:  Lyall Jonathan Di Trapani
+ * sim style sheet
+ */
+
+body
+{
+	background-color: #999999;
+	color: #222222;
+	max-width: 700px;
+	min-width: 400px;
+	font-family: sans-serif;
+	margin: 8px;
+}
+
+table
+{
+    background-color: #ffffff;
+    color: #000000;
+    margin: 2px 0px 0px 0px;
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #222222;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+h3
+{
+    margin: 8px 0px 0px 0px;
+}
+
+td
+{
+    padding: 2px;
+    margin: 0px;
+    width: 40px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #222222;
+    background-color: #ffffff;
+    text-align: right;
+}
+
+th
+{
+    border-width: 1px;
+    border-style: solid;
+    border-color: #222222;
+    background-color: #BBBBBB;
+}
+
+td.team
+{
+    background-color: #BBBBBB;
+    text-align: center;
+}
+
+div#config
+{
+    width: 300px;
+}
+
+div.control
+{
+}
+
+div#controls
+{
+    text-align: right;
+}
+
+input.number_entry
+{
+    width: 60px;
+    text-align: right;
+}
+
+.visible
+{
+	display: block;
+}
+
+.invisible
+{
+	display: none;
+}
+
+ul#output_
+{
+	text-align: left;
+}

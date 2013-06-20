@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Author:  Lyall Jonathan Di Trapani ======================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title> Velocity Production Simulator Exercise </title>
+	<script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="lib/coffee-script.js"></script>
+    <script type="text/coffeescript" src="coffee/sim.coffee"></script>
+    <script type="text/coffeescript" src="coffee/station.coffee">
+    </script>
+    <script type="text/coffeescript" src="coffee/team.coffee"></script>
+    <script type="text/coffeescript" src="coffee/main.coffee"></script>
+    <link type="text/css" rel="stylesheet" href="sim.css" />
+</head>
+
+<body>
+    <div id=buttons>
+        <input type="button" value="Configure" 
+               id="config_button" onClick="sim.show_div('config');" />
+        <input type="button" value="Run" 
+               id="run_button" onClick="sim.show_div('run');" />
+        <input type="button" value="Results" 
+               id="results_button" onClick="sim.show_div('results');" />
+    </div>
+    <div id="config" class="visible">
+        <h3> Config </h3>
+        <div id="controls">
+            <div class=control> Number of Teams 
+                <input name="num_teams" id="num_teams" value="7"
+                       class="number_entry" type="text" />
+            </div>
+            <div class=control> Number of Stations
+                <input name="num_stations" id="num_stations" value="10"
+                       class="number_entry" type="text" />
+            </div>
+            <div class=control> Round #
+                <input name="round_number" id="round_number" value="1"
+                       class="number_entry" type="text" />
+            </div>
+            <div class=control> Number of Steps
+                <input name="num_steps" id="num_steps" value="20"
+                       class="number_entry" type="text" />
+            </div>
+            <div class=control> Maximum Inducted WIP
+                <input name="inducted_wip" id="inducted_wip" value="85"
+                       class="number_entry" type="text" />
+            </div>
+            <div>
+                <input id="setup_button" type="button" 
+                       value="Set-up Simulation" onClick="sim.setup();"/>
+            </div>
+        </div>
+    </div>
+    <div id="run" class="invisible">
+        <div> 
+            <div class="label">
+            Round Number: <span id="round_number_label"> 1 </span> 
+            </div>
+            <div class="label">
+            Step Number: <span id="step_number_label"> 0 </span>
+            </div>
+        </div>
+        <input id="step_button" type="button" value="Step >" 
+               onClick="sim.step_();">
+        <input id="simulate_button" type="button" value="Simulate >>>"
+               onClick="sim.simulate();">
+        <h3> Current Capacity </h3>
+        <table id="capacity_table"> </table>
+        <h3> Current WIP </h3>
+        <table id="wip_table"> </table>
+    </div>
+    <div id="results" class="invisible">
+        <h3> Total Capacity </h3>
+        <table id="total_capacity_table"> </table>
+        <h3> Total Produced </h3>
+        <table id="total_produced_table"> </table>
+        <h3> Final WIP/Produced </h3>
+        <table id="final_table"> 
+        <thead id="final_thead">
+        </thead>
+        <tbody id="final_tbody"> </tbody>
+        </table>
+    </div>
+    <ul id="output_"> </ul>
+</body></html>
