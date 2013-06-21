@@ -57,6 +57,11 @@ td.team
     text-align: center;
 }
 
+td.wip
+{
+    background-color: #CCF0FF;
+}
+
 div#config
 {
     width: 300px;

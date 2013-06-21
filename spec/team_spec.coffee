@@ -51,34 +51,32 @@ test 'initial_wip (round_num, station_num, inducted_wip -> WIP)', ->
     test_init_func('wip', tests)
 
 
-test 'make_station (round_num, station_num)', ->
+test 'make_station (station_num)', ->
     station = team.make_station 1, 1, 100
     equal station.num, 1
     equal station.wip, 0
-    equal station.min, 1
-    equal station.round_num, 1
+    equal station.dice.min, 1
     station = team.make_station 5, 3, 100
     equal station.wip, 9
-    equal station.dice_count, 1
-    equal station.min, 4
-    equal station.round_num, 5
+    equal station.dice.dice_count, 1
+    equal station.dice.min, 4
     station = team.make_station 5, 1, 100
     equal station.num, 1, 's1.num = 1'
     equal station.wip, 100, 's1.wip = 100'
-    equal station.dice_count, 2, 's1.dice_count = 2'
+    equal station.dice.dice_count, 2, 's1.dice.dice_count = 2'
 
 
 make_test_team = (num_stations, round_num, inducted_wip) ->
     t = new team.Team num_stations, round_num, inducted_wip
     for station in t.stations
         if station.num == 1
-            station.random = () -> 0.99     # S1 always rolls a 6
+            station.dice.random = () -> 0.99    # S1 always rolls a 6
         else
-            station.random = () -> 0.3      # Others always roll a 2
+            station.dice.random = () -> 0.3     # Others always roll a 2
     t
 
 
-test 'Team', ->
+test 'Team and attach previous', ->
     t = make_test_team 5, 1, 100
     equal t.stations.length, 5, 'team is correct length'
     equal typeof t.get_station(1).prev, 'undefined'
@@ -88,14 +86,15 @@ test 'Team', ->
 
 test 'Team.roll() on round 5 when station 1 has 0 WIP', ->
     t = make_test_team 5, 4, 0
-    equal t.get_station(3).dice_count, 1, 'R4: station 3 has 1 dice'
+    get_count = () -> t.get_station(3).dice.dice_count
+    equal get_count(), 1, 'R4: station 3 has 1 dice'
     t.roll()
     t = make_test_team 5, 5, 0
     t.roll()
-    equal t.get_station(3).dice_count, 2, 'R5: station 3 now has 2 dice'
+    equal get_count(), 2, 'R5: station 3 now has 2 dice'
     t = make_test_team 5, 6, 0
     t.roll()
-    equal t.get_station(3).dice_count, 2, 'R6: station 3 now has 2 dice'
+    equal get_count(), 2, 'R6: station 3 now has 2 dice'
     equal t.get_station(1).wip, 0, 'R6: station 1 has WIP = 0'
 
 
@@ -128,11 +127,9 @@ test 'Team.update() on round 1', ->
     s2 = t.get_station(2)
     deepEqual get_state(s1), [0, 0, 0, 0, 0, 0], 'Initial S1'
     deepEqual get_state(s2), [0, 4, 0, 0, 0, 0], 'Initial S2'
-    t.roll()
     t.update()
     deepEqual get_state(s1), [1, 0, 6, 6, 6, 6], 'S1 after step 1'
     deepEqual get_state(s2), [1, 8, 2, 2, 2, 2], 'S2 after step 1'
-    t.roll()
     t.update()
     deepEqual get_state(s1), [2, 0, 6, 6, 12, 12], 'S1 after step 2'
     deepEqual get_state(s2), [2, 12, 2, 2, 4, 4], 'S2 after step 2'
@@ -141,7 +138,6 @@ test 'Team.update() on round 1', ->
 test 'Team.get_total_wip', ->
     t = make_test_team 5, 1, 100
     equal t.get_total_wip(), 4 * 4
-    t.roll()
     t.update()
     equal t.get_total_wip(), 4 * 4 + 6 - 2
 
@@ -173,7 +169,10 @@ check_teams_attr = (teams, station_nums, attr, exp_val) ->
     check_stations_attr = (team) ->
         for i in station_nums
             station = team.get_station i
-            equal station[attr], exp_val
+            if attr in ['dice_count', 'min', 'range']
+                equal station.dice[attr], exp_val
+            else
+                equal station[attr], exp_val
     sim.map check_stations_attr, teams
 
 
@@ -234,3 +233,19 @@ test 'make teams for round 4', ->
         [[3], 'range', 3]
     ]
     check_attrs teams, attr_sets
+
+
+test 'get_table_row(name) name = capacity|wip|total_cap|total_prod', ->
+    t = make_test_team 4, 1, 100
+    tds = t.get_table_row 'total_capacity'
+    equal tds.length, 4
+    tds = t.get_table_row 'wip'
+    equal tds.length, 5
+    
+
+test 'get_total_produced', ->
+    t = make_test_team 4, 1, 100
+    equal t.get_total_produced(), 0
+    for value in [2, 4, 6]
+        t.update()
+        equal t.get_total_produced(), value

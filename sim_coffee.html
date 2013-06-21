@@ -10,6 +10,8 @@
     <script type="text/coffeescript" src="coffee/station.coffee">
     </script>
     <script type="text/coffeescript" src="coffee/team.coffee"></script>
+    <script type="text/coffeescript" src="coffee/summary.coffee">
+    </script>
     <script type="text/coffeescript" src="coffee/main.coffee"></script>
     <link type="text/css" rel="stylesheet" href="sim.css" />
 </head>
@@ -22,6 +24,8 @@
                id="run_button" onClick="sim.show_div('run');" />
         <input type="button" value="Results" 
                id="results_button" onClick="sim.show_div('results');" />
+        <input type="button" value="Summary" 
+               id="summary_button" onClick="sim.show_div('summary');" />
     </div>
     <div id="config" class="visible">
         <h3> Config </h3>
@@ -48,7 +52,8 @@
             </div>
             <div>
                 <input id="setup_button" type="button" 
-                       value="Set-up Simulation" onClick="sim.setup();"/>
+                       value="Set-up Simulation" 
+                       onClick="sim.setup();"/>
             </div>
         </div>
     </div>
@@ -75,11 +80,29 @@
         <table id="total_capacity_table"> </table>
         <h3> Total Produced </h3>
         <table id="total_produced_table"> </table>
-        <h3> Final WIP/Produced </h3>
-        <table id="final_table"> 
-        <thead id="final_thead">
-        </thead>
-        <tbody id="final_tbody"> </tbody>
+        <h3> Utilization (%) </h3>
+        <table id="utilization_table"> </table>
+    </div>
+    <div id="summary" class="visible">
+        <h3> WIP/Produced </h3>
+        <table> 
+        <thead id="wip_prod_thead"> </thead>
+        <tbody id="wip_prod_tbody"> </tbody>
+        </table>
+        <h3> High/Average/Low of WIP/Produced </h3>
+        <table> 
+        <thead id="average_thead"> </thead>
+        <tbody id="average_tbody"> </tbody>
+        </table>
+        <h3> Station 3 Missed Opportunity </h3>
+        <table> 
+        <thead id="missed_op_thead"> </thead>
+        <tbody id="missed_op_tbody"> </tbody>
+        </table>
+        <h3> Utilization </h3>
+        <table> 
+        <thead id="summary_util_thead"> </thead>
+        <tbody id="summary_util_tbody"> </tbody>
         </table>
     </div>
     <ul id="output_"> </ul>
