@@ -2,9 +2,6 @@
 # Main simulation code
 
 
-NUM_ROUNDS = 6
-
-
 ready = () ->
     $('num_teams').value = sim.num_teams
     $('num_stations').value = sim.num_stations
