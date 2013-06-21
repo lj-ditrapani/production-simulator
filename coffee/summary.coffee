@@ -25,6 +25,11 @@ class sim.Summary
         # wip/prod, H/Avg/L wip/prod, s3 missed op, utilization
         if round_num > NUM_ROUNDS or round_num < 1
             return
+        @update_wip_prod round_num, teams 
+        @update_missed_op round_num, teams 
+        @update_utilization round_num, teams 
+
+    update_wip_prod: (round_num, teams) ->
         s = this
         update_team_values = (team_index) ->
             round_index = round_num - 1
@@ -34,6 +39,11 @@ class sim.Summary
             total_produced = team.get_total_produced()
             s.produced[team_index][round_index] = total_produced
         map update_team_values, [0...teams.length]
+
+    update_missed_op: () ->
+        #missed_op = @missed_op:
+
+    update_utilization: () ->
 
     display: (teams) ->
         @display_wip_prod()
@@ -147,5 +157,6 @@ make_body = (summary, teams, name, bound, funcs, letter, attrs) ->
             dom.create 'tr', tds
         rows = map make_row, [0...bound]
         dom.add $(name + '_tbody'), rows
+
 
 sim.summary_mod = {make_zero_grid: make_zero_grid}
