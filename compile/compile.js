@@ -3,7 +3,9 @@ Author:  Lyall Jonathan Di Trapani -------------------------------------
 Usage:
 java -jar rhino.jar -f compile.js
 */
-file_names = ['sim', 'station', 'team'];    // List of files to compile
+
+// List of files to compile
+file_names = ['sim', 'station', 'team', 'summary'];
 load("../lib/coffee-script.js");
 code = '';
 for (i in file_names) {

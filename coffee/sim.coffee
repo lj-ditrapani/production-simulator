@@ -22,6 +22,14 @@ window.sim = {
 }
 
 
+default_values =
+    num_teams: 3,       # Number of teams
+    num_stations: 6     # Number of stations
+    round_num: 1
+    num_steps: 20
+    inducted_wip: 85,   # How much total wip to induce on rounds >= 5
+
+
 map = (f, list) ->
     f x for x in list
 
@@ -68,24 +76,43 @@ step_data = (round_num, teams) ->
     sim.step_num += 1
     # udpate summary wip, produced, H/Avg/L, s3 missed op, utilization
     if sim.step_num == sim.num_steps
-        sim.summary.update(round_num, teams)
+        sim.summary.update(round_num, teams, sim.step_num)
 
 
 sim.setup = () ->
     # Set-up simulation round based on configuration
-    num_teams = parseInt($('num_teams').value)
-    num_stations = parseInt $('num_stations').value
+    num_teams = get_input 'num_teams'
+    num_stations = get_input 'num_stations'
     if num_teams != sim.num_teams or num_stations != sim.num_stations
         sim.num_teams = num_teams
         sim.num_stations = num_stations
         sim.summary = new sim.Summary num_teams, num_stations
-    sim.round_num = parseInt $('round_number').value
-    dom.set_text($('round_number_label'), sim.round_num)
-    sim.num_steps = parseInt($('num_steps').value)
+    sim.round_num = get_input 'round_num'
+    dom.set_text($('round_num_label'), sim.round_num)
+    sim.num_steps = get_input 'num_steps'
     sim.step_num = 0
     dom.set_text $('step_number_label'), sim.step_num
-    sim.inducted_wip = parseInt $('inducted_wip').value
+    sim.inducted_wip = get_input 'inducted_wip'
     generate_sim num_teams, num_stations
+
+
+get_input = (name) ->
+    # input validation
+    value = parseInt $(name).value
+    if is_value_ok(name, value)
+        value
+    else
+        $(name).value = default_values[name]
+        default_values[name]
+
+
+is_value_ok = (name, value) ->
+    if isNaN(value) or (value <= 0)
+        false
+    else if (name == 'num_stations') and (value < 3)
+        false
+    else
+        true
 
 
 generate_sim = (num_teams, num_stations) ->

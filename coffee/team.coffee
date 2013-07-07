@@ -84,11 +84,15 @@ class team.Team
             result
         sum(s.wip for s in @stations[1..])
 
-    get_total_produced: () ->
-        @stations[@stations.length - 1].total_produced
+    get_missed_op: () ->
+        s3 = @get_station(3)
+        s3.total_capacity - s3.total_produced
 
     get_utilization: (station_num, step_num) ->
-        @stations[station_num].get_utilization(step_num)
+        @get_station(station_num).get_utilization step_num
+
+    get_total_produced: () ->
+        @stations[@stations.length - 1].total_produced
 
     get_table_row: (name) ->
         row = (station.get_td name for station in @stations)

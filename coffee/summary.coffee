@@ -21,18 +21,18 @@ class sim.Summary
         @missed_op = make_zero_grid num_teams, NUM_ROUNDS
         @utilization = make_zero_grid num_stations, NUM_ROUNDS
 
-    update: (round_num, teams) ->
+    update: (round_num, teams, step_num) ->
         # wip/prod, H/Avg/L wip/prod, s3 missed op, utilization
         if round_num > NUM_ROUNDS or round_num < 1
             return
         @update_wip_prod round_num, teams 
         @update_missed_op round_num, teams 
-        @update_utilization round_num, teams 
+        @update_utilization round_num, teams, step_num
 
     update_wip_prod: (round_num, teams) ->
         s = this
+        round_index = round_num - 1
         update_team_values = (team_index) ->
-            round_index = round_num - 1
             team = teams[team_index]
             total_wip = team.get_total_wip()
             s.wip[team_index][round_index] = total_wip
@@ -40,10 +40,19 @@ class sim.Summary
             s.produced[team_index][round_index] = total_produced
         map update_team_values, [0...teams.length]
 
-    update_missed_op: () ->
-        #missed_op = @missed_op:
+    update_missed_op: (round_num, teams) ->
+        round_index = round_num - 1
+        for team_index in [0...teams.length]
+            val = teams[team_index].get_missed_op()
+            @missed_op[team_index][round_index] = val
 
-    update_utilization: () ->
+    update_utilization: (round_num, teams, step_num) ->
+        num_stations = @utilization.length
+        round_index = round_num - 1
+        for station_index in [0...num_stations]
+            val = get_utilization (station_index + 1), teams, step_num
+            @utilization[station_index][round_index] = val
+        
 
     display: (teams) ->
         @display_wip_prod()
@@ -113,14 +122,16 @@ class sim.Summary
     get_utilization: (teams, i, j, label) ->
         @utilization[i][j]
 
+
 make_zero_grid = (height, width) ->
-    ###
-    grid = []
-    make_rows = (i) ->
-        grid.push (0 for j in [0...width])
-    map make_row, [0...height]
-    ###
     ((0 for j in [0...width]) for i in [0...height])
+
+
+get_utilization = (station_num, teams, step_num) ->
+    sum = 0
+    for team in teams
+        sum += team.get_utilization(station_num, step_num)
+    Math.round(sum / teams.length)
 
 
 reset_table = (name) ->

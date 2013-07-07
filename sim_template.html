@@ -20,6 +20,8 @@
                id="run_button" onClick="sim.show_div('run');" />
         <input type="button" value="Results" 
                id="results_button" onClick="sim.show_div('results');" />
+        <input type="button" value="Summary" 
+               id="summary_button" onClick="sim.show_div('summary');" />
     </div>
     <div id="config" class="visible">
         <h3> Config </h3>
@@ -33,11 +35,11 @@
                        class="number_entry" type="text" />
             </div>
             <div class=control> Round #
-                <input name="round_number" id="round_number" value="1"
+                <input name="round_num" id="round_num" value="1"
                        class="number_entry" type="text" />
             </div>
-            <div class=control> Number of Rolls
-                <input name="num_rolls" id="num_rolls" value="20"
+            <div class=control> Number of Steps
+                <input name="num_steps" id="num_steps" value="20"
                        class="number_entry" type="text" />
             </div>
             <div class=control> Maximum Inducted WIP
@@ -54,17 +56,17 @@
     <div id="run" class="invisible">
         <div> 
             <div class="label">
-            Round Number: <span id="round_number_label"> 1 </span> 
+            Round Number: <span id="round_num_label"> 1 </span> 
             </div>
             <div class="label">
-            Roll Number: <span id="roll_number_label"> 0 </span>
+            Step Number: <span id="step_number_label"> 0 </span>
             </div>
         </div>
         <input id="step_button" type="button" value="Step >" 
                onClick="sim.step_();">
         <input id="simulate_button" type="button" value="Simulate >>>"
                onClick="sim.simulate();">
-        <h3> Current Roll </h3>
+        <h3> Current Capacity </h3>
         <table id="capacity_table"> </table>
         <h3> Current WIP </h3>
         <table id="wip_table"> </table>
@@ -74,11 +76,29 @@
         <table id="total_capacity_table"> </table>
         <h3> Total Produced </h3>
         <table id="total_produced_table"> </table>
-        <h3> Final WIP/Produced </h3>
-        <table id="final_table"> 
-        <thead id="final_thead">
-        </thead>
-        <tbody id="final_tbody"> </tbody>
+        <h3> Utilization (%) </h3>
+        <table id="utilization_table"> </table>
+    </div>
+    <div id="summary" class="invisible">
+        <h3> WIP/Produced </h3>
+        <table> 
+        <thead id="wip_prod_thead"> </thead>
+        <tbody id="wip_prod_tbody"> </tbody>
+        </table>
+        <h3> High/Average/Low of WIP/Produced </h3>
+        <table> 
+        <thead id="average_thead"> </thead>
+        <tbody id="average_tbody"> </tbody>
+        </table>
+        <h3> Station 3 Missed Opportunity </h3>
+        <table> 
+        <thead id="missed_op_thead"> </thead>
+        <tbody id="missed_op_tbody"> </tbody>
+        </table>
+        <h3> Utilization </h3>
+        <table> 
+        <thead id="summary_util_thead"> </thead>
+        <tbody id="summary_util_tbody"> </tbody>
         </table>
     </div>
     <ul id="output_"> </ul>

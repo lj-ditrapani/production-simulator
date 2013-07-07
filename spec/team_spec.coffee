@@ -249,3 +249,17 @@ test 'get_total_produced', ->
     for value in [2, 4, 6]
         t.update()
         equal t.get_total_produced(), value
+
+
+test 'get_missed_op', ->
+    t = make_test_team 4, 1, 100
+    s3 = t.get_station(3)
+    equal s3.wip, 4, 'has 4 available as WIP'
+    t.update()
+    equal s3.capacity, 2, 'can produce up to 2 (capacity)'
+    equal t.get_missed_op(), 0, '2 < 4, no missed op'
+    s3.dice.random = () -> 0.999
+    equal s3.wip, 4, 'has 4 available as WIP'
+    t.update()
+    equal s3.capacity, 6, 'can produce up to 6 (capacity)'
+    equal t.get_missed_op(), 2, '6 - 4 = 2'
