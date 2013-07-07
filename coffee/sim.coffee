@@ -122,14 +122,15 @@ generate_sim = (num_teams, num_stations) ->
                                     sim.round_num, 
                                     sim.inducted_wip
     display(sim.step_num, sim.teams)
-    names = ['capacity', 'wip', 'total_capacity', 
+    names = ['capacity', 'wip', 'produced', 'total_capacity', 
              'total_produced', 'utilization']
     make_table name, num_teams, num_stations for name in names
     sim.summary.display(sim.teams)
 
 
 make_table = (name, num_teams, num_stations) ->
-    # name = capacity | wip | total_capacity | total_produced | utiliza
+    # name = capacity | wip | produced | 
+    #        total_capacity | total_produced | utilization
     table = $ name + '_table'
     dom.removeAllChildren table
     make_row = (index) ->
@@ -155,8 +156,8 @@ make_table = (name, num_teams, num_stations) ->
 
 display = (step_num, teams) ->
     # Display state of stations and totals in all tables
-    # tables: capacity, total_capacity, total_produced, 
-    #         curr_wip, total_wips, utilization
+    # tables: capacity, curr_wip, produced, 
+    #         total_capacity, total_wips, total_produced, utilization
     dom.set_text($('step_number_label'), step_num)
     for team in teams
         team.display(step_num)

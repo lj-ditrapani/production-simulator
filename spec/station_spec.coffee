@@ -156,10 +156,10 @@ test 'does not update if not active', ->
 
 test 'add_tds', ->
     s = @station
-    s.add_tds 1, 2, 3, 4, 5
+    s.add_tds 1, 2, 3, 4, 5, 6
     names = ['wip', 'total_capacity', 'utilization']
     results = (s.get_td name for name in names)
-    deepEqual results, [2, 3, 5]
+    deepEqual results, [2, 4, 6]
 
 
 test 'get_utilization', ->

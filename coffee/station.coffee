@@ -26,7 +26,7 @@ class sim.Dice
 
 class TDTags
     constructor: (
-        @capacity, @wip, @total_capacity, 
+        @capacity, @wip, @produced, @total_capacity, 
         @total_produced, @utilization) ->
 
     get: (name) ->
@@ -34,7 +34,7 @@ class TDTags
 
     display: (values) ->
         # Display values of current state
-        names = ['capacity', 'wip', 'total_capacity', 
+        names = ['capacity', 'wip', 'produced', 'total_capacity', 
                  'total_produced', 'utilization']
         for i in [0...names.length]
             dom.set_text this[names[i]], values[i]
@@ -104,9 +104,9 @@ class sim.Station
         else
             Math.round(@active_count * 1.0 / step_num * 100)
 
-    add_tds: (capacity, wip, total_capacity, 
+    add_tds: (capacity, wip, produced, total_capacity, 
               total_produced, utilization) ->
-        @tds = new TDTags capacity, wip, total_capacity,
+        @tds = new TDTags capacity, wip, produced, total_capacity,
                                   total_produced, utilization
 
     get_td: (name) ->
@@ -120,6 +120,7 @@ class sim.Station
             @wip;
         @tds.display [@capacity,
                       new_wip,
+                      @produced,
                       @total_capacity,
                       @total_produced,
                       @get_utilization(step_num)]
