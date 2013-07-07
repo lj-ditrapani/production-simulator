@@ -123,7 +123,7 @@ generate_sim = (num_teams, num_stations) ->
                                     sim.inducted_wip
     display(sim.step_num, sim.teams)
     names = ['capacity', 'wip', 'produced', 'total_capacity', 
-             'total_produced', 'utilization']
+             'total_produced', 'utilization', 'efficiency']
     make_table name, num_teams, num_stations for name in names
     sim.summary.display(sim.teams)
 

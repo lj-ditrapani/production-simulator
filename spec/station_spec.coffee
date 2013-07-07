@@ -16,7 +16,7 @@ test 'roll_dice', ->
         
 module 'Station',
     setup: ->
-        #        Station num dice_count min max wip random
+        #            Station num dice_count min wip random
         station = new sim.Station 2, 2, 1, 4, random
         station.prev = {produced: 3}
         station.total_capacity = 7
@@ -156,10 +156,10 @@ test 'does not update if not active', ->
 
 test 'add_tds', ->
     s = @station
-    s.add_tds 1, 2, 3, 4, 5, 6
-    names = ['wip', 'total_capacity', 'utilization']
+    s.add_tds 1, 2, 3, 4, 5, 6, 7
+    names = ['wip', 'total_capacity', 'utilization', 'efficiency']
     results = (s.get_td name for name in names)
-    deepEqual results, [2, 4, 6]
+    deepEqual results, [2, 4, 6, 7]
 
 
 test 'get_utilization', ->
@@ -175,3 +175,14 @@ test 'get_utilization', ->
     s.roll_dice()
     s.update(1)
     equal @station.get_utilization(4), 50
+
+
+test 'get_efficiency', ->
+    s = @station
+    equal s.get_efficiency(), 71, '5 total_prod / 7 total_cap = 71%'
+    s.roll_dice()       # adds 12 to total_cap -> 7 + 12 = 19
+    s.update(1)         # adds 4 to total_prod -> 4 + 5 = 9
+    equal s.get_efficiency(), 47, '9 total_prod / 19 total_cap = 47%'
+    s.roll_dice()       # adds 12 to total_cap -> 12 + 19 = 31
+    s.update(1)         # adds 3 to total_prod -> 3 + 9 = 12
+    equal s.get_efficiency(), 39, '12 total_prod / 31 total_cap = 39%'

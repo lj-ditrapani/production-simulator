@@ -34,7 +34,7 @@ team.make_station = (round_num, station_num, inducted_wip) ->
     wip = team.initial_wip round_num, station_num, inducted_wip
     station = new sim.Station station_num, dice_count, min, wip
     # Attach the 'table data' cells that belong to this station
-    station.add_tds.apply station, (dom.create 'td' for i in [1..6])
+    station.add_tds.apply station, (dom.create 'td' for i in [1..7])
     station
 
 
