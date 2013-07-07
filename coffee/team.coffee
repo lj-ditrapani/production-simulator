@@ -91,6 +91,9 @@ class team.Team
     get_utilization: (station_num, step_num) ->
         @get_station(station_num).get_utilization step_num
 
+    get_efficiency: (station_num) ->
+        @get_station(station_num).get_efficiency()
+
     get_total_produced: () ->
         @stations[@stations.length - 1].total_produced
 

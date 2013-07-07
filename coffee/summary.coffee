@@ -1,10 +1,11 @@
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
 # Summary table code
 
-# H/Avg/L, S3 missed op, and utilization are derived tables
+# H/Avg/L, S3 missed op, utilization, and efficiency are derived tables
 #               summary wip/produced -> summary H/Avg/L
 # S3 total_capacity & total_produced -> summary S3 missed op
-#                  round utilization -> summary utilization
+#          current round utilization -> summary utilization
+#           current round efficiency -> summary efficiency
 
 
 NUM_ROUNDS = 6
@@ -20,6 +21,7 @@ class sim.Summary
         @produced = make_zero_grid num_teams, NUM_ROUNDS
         @missed_op = make_zero_grid num_teams, NUM_ROUNDS
         @utilization = make_zero_grid num_stations, NUM_ROUNDS
+        @efficiency = make_zero_grid num_stations, NUM_ROUNDS
 
     update: (round_num, teams, step_num) ->
         # wip/prod, H/Avg/L wip/prod, s3 missed op, utilization
@@ -28,6 +30,7 @@ class sim.Summary
         @update_wip_prod round_num, teams 
         @update_missed_op round_num, teams 
         @update_utilization round_num, teams, step_num
+        @update_efficiency round_num, teams
 
     update_wip_prod: (round_num, teams) ->
         s = this
@@ -52,13 +55,20 @@ class sim.Summary
         for station_index in [0...num_stations]
             val = get_utilization (station_index + 1), teams, step_num
             @utilization[station_index][round_index] = val
-        
+
+    update_efficiency: (round_num, teams) ->
+        num_stations = @efficiency.length
+        round_index = round_num - 1
+        for station_index in [0...num_stations]
+            val = get_efficiency (station_index + 1), teams
+            @efficiency[station_index][round_index] = val
 
     display: (teams) ->
         @display_wip_prod()
         @display_average()
         @display_missed_op teams
         @display_utilization teams
+        @display_efficiency teams
 
     display_wip_prod: () ->
         reset_table 'wip_prod'
@@ -82,11 +92,19 @@ class sim.Summary
         make_body(this, teams, 'missed_op', bound, funcs, 'T', {})
 
     display_utilization: (teams) ->
-        # station X round (average utilization across teams
-        reset_table 'summary_util'
+        # station X round (average utilization across teams)
         name = 'summary_util'
+        reset_table name
         bound = teams[0].stations.length
         funcs = ['get_utilization']
+        make_body(this, teams, name, bound, funcs, 'S', {})
+
+    display_efficiency: (teams) ->
+        # station X round (average efficiency across teams)
+        name = 'summary_efficiency'
+        reset_table name
+        bound = teams[0].stations.length
+        funcs = ['get_efficiency']
         make_body(this, teams, name, bound, funcs, 'S', {})
 
     get_wip: (teams, i, j, label) ->
@@ -122,6 +140,9 @@ class sim.Summary
     get_utilization: (teams, i, j, label) ->
         @utilization[i][j]
 
+    get_efficiency: (teams, i, j, label) ->
+        @efficiency[i][j]
+
 
 make_zero_grid = (height, width) ->
     ((0 for j in [0...width]) for i in [0...height])
@@ -130,7 +151,14 @@ make_zero_grid = (height, width) ->
 get_utilization = (station_num, teams, step_num) ->
     sum = 0
     for team in teams
-        sum += team.get_utilization(station_num, step_num)
+        sum += team.get_utilization station_num, step_num
+    Math.round(sum / teams.length)
+
+
+get_efficiency = (station_num, teams) ->
+    sum = 0
+    for team in teams
+        sum += team.get_efficiency station_num
     Math.round(sum / teams.length)
 
 
