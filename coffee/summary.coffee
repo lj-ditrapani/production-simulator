@@ -17,6 +17,7 @@ class sim.Summary
     # wip/produced, H/Avg/L, s3 missed op, utilization
     constructor: (num_teams, num_stations) ->
         # Creates 2D arrays for summary wip, produced, missed_op, util
+        @NUM_STATIONS = num_stations
         @wip = make_zero_grid num_teams, NUM_ROUNDS
         @produced = make_zero_grid num_teams, NUM_ROUNDS
         @missed_op = make_zero_grid num_teams, NUM_ROUNDS
@@ -50,17 +51,16 @@ class sim.Summary
             @missed_op[team_index][round_index] = val
 
     update_utilization: (round_num, teams, step_num) ->
-        num_stations = @utilization.length
         round_index = round_num - 1
-        for station_index in [0...num_stations]
-            val = get_utilization (station_index + 1), teams, step_num
+        for station_index in [0...@NUM_STATIONS]
+            station_num = station_index + 1
+            val = compute_utilization station_num, teams, step_num
             @utilization[station_index][round_index] = val
 
     update_efficiency: (round_num, teams) ->
-        num_stations = @efficiency.length
         round_index = round_num - 1
-        for station_index in [0...num_stations]
-            val = get_efficiency (station_index + 1), teams
+        for station_index in [0...@NUM_STATIONS]
+            val = compute_efficiency (station_index + 1), teams
             @efficiency[station_index][round_index] = val
 
     display: (teams) ->
@@ -95,17 +95,15 @@ class sim.Summary
         # station X round (average utilization across teams)
         name = 'summary_util'
         reset_table name
-        bound = teams[0].stations.length
         funcs = ['get_utilization']
-        make_body(this, teams, name, bound, funcs, 'S', {})
+        make_body(this, teams, name, @NUM_STATIONS, funcs, 'S', {})
 
     display_efficiency: (teams) ->
         # station X round (average efficiency across teams)
         name = 'summary_efficiency'
         reset_table name
-        bound = teams[0].stations.length
         funcs = ['get_efficiency']
-        make_body(this, teams, name, bound, funcs, 'S', {})
+        make_body(this, teams, name, @NUM_STATIONS, funcs, 'S', {})
 
     get_wip: (teams, i, j, label) ->
         @wip[i][j]
@@ -148,14 +146,14 @@ make_zero_grid = (height, width) ->
     ((0 for j in [0...width]) for i in [0...height])
 
 
-get_utilization = (station_num, teams, step_num) ->
+compute_utilization = (station_num, teams, step_num) ->
     sum = 0
     for team in teams
         sum += team.get_utilization station_num, step_num
     Math.round(sum / teams.length)
 
 
-get_efficiency = (station_num, teams) ->
+compute_efficiency = (station_num, teams) ->
     sum = 0
     for team in teams
         sum += team.get_efficiency station_num
