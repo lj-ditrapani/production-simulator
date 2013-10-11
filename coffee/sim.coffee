@@ -37,10 +37,12 @@ map = (f, list) ->
 sim.show_div = (name) ->
     div = $ name
     div.className = 'visible'
+    $(name + '_button').className = 'selected'
     names = ['config', 'run', 'results', 'summary']
     names = remove names, name
     for name in names
         $(name).className = 'invisible'
+        $(name + '_button').className = 'unselected'
 
 
 remove = (list, el_to_remove) ->
