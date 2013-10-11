@@ -78,16 +78,6 @@ spec_runner.html    runs all CoffeesSript qUnit unit-tests
 
 
 TODO:
-Create functional tests
-    Although we have unit tests for the internal logic,
-    it would be nice to have user-level functional tests to verify that 
-    the sim.html is working as required instead of doing manual tests.
-    - Tests would provide user input
-    - setup static mock random objects 
-      (closure on array & index, move index along).  Known values.
-    - Run simulation
-    - Check data output from simulation matches expectations
-
 - List round rules on cofig page
 - "Show all panels" button (make config, run, results & summary visible
   at same time).  If you click on config, run, results, or summary 
@@ -98,4 +88,15 @@ Create functional tests
     setup()
     for round_num in [1..6]
         sim.round_num = round_num
-
+- autofetch dependencies?  qunit, rhino, CoffeeScript
+  (assume python and sh)
+- should qunit and rhino be added to .gitignore?
+- Create functional tests
+    Although we have unit tests for the internal logic,
+    it would be nice to have user-level functional tests to verify that 
+    the sim.html is working as required instead of doing manual tests.
+    - Tests would provide user input
+    - setup static mock random objects 
+      (closure on array & index, move index along).  Known values.
+    - Run simulation
+    - Check data output from simulation matches expectations
