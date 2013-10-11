@@ -1,6 +1,13 @@
 Author: Lyall Jonathan Di Trapani
 
 
+This is a browser-based, production simulator that illustrates 
+constraint theory and project management concepts, specifically 
+bottlenecks and variation, in AFIT course LOG 238:  Critical Chain 
+Project Management Foundational Concepts.  
+AFIT/LS:  School of Systems and Logistics.
+
+
 To create sim.html (the production simulator)
 ========================================================================
 Ensure you have the necessary dependencies 
@@ -18,8 +25,11 @@ access.
 ========================================================================
 
 
+Test CoffeesSript code
+========================================================================
 To test the CoffeesSript code, open spec_runner.html in a web-browser 
 (ensure you allow blocked content if prompted).
+========================================================================
 
 
 Directories
@@ -57,6 +67,16 @@ language if you rewrote the scripts.
 ========================================================================
 
 
+Understanding the different HTML files
+========================================================================
+sim_coffee.html     links to coffee/* files; used for testing
+sim_js.html         links to js/out.js; used for testing
+sim_template.html   template used to produce sim.html
+sim.html            actual stand-alone product
+spec_runner.html    runs all CoffeesSript qUnit unit-tests
+========================================================================
+
+
 TODO:
 Create functional tests
     Although we have unit tests for the internal logic,
@@ -68,12 +88,13 @@ Create functional tests
     - Run simulation
     - Check data output from simulation matches expectations
 
-- Round Rules listed on cofig page
+- List round rules on cofig page
 - "Show all panels" button (make config, run, results & summary visible
   at same time).  If you click on config, run, results, or summary 
   buttons, it hides the other panels automatically
+  Only useful in sim_coffee.html for quick testing
 - Simulate all rounds:  run simulation for rounds 1-6 in sequence for 
-  current config
+  current config (is this useful outside of testing?)
     setup()
     for round_num in [1..6]
         sim.round_num = round_num
