@@ -91,6 +91,7 @@ TODO:
 - autofetch dependencies?  qunit, rhino, CoffeeScript
   (assume python and sh)
 - should qunit and rhino be added to .gitignore?
+- make js/utils a seperate project and submodule?
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that 
