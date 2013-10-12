@@ -100,7 +100,7 @@ sim.setup = () ->
 
 get_input = (name) ->
     # input validation
-    value = parseInt $(name).value
+    value = parseInt $(name).value, 10
     if is_value_ok(name, value)
         value
     else

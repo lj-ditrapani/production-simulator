@@ -92,6 +92,8 @@ TODO:
   (assume python and sh)
 - should qunit and rhino be added to .gitignore?
 - make js/utils a seperate project and submodule?
+    - write in CoffeeScript and add unit tests
+- get rid of sim_js.html?  Not used in testing anymore and broken.
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that 
@@ -101,3 +103,8 @@ TODO:
       (closure on array & index, move index along).  Known values.
     - Run simulation
     - Check data output from simulation matches expectations
+- Provide alternate build (compile) via node.js 
+  Compiles CoffeeScript -> JavaScript and inserts final JavaScript and CSS
+  into sim_template.html to produce standalone sim.html
+  (currently uses rhino & python to accomplish this)
+- write readme.txt in markdown
