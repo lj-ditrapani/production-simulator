@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import io
 
 def read_files(*args):
     text_blocks = [read_file('../js/{0}.js'.format(name)) for name in args]
@@ -18,6 +19,6 @@ middle, tail = text2.split('/*sim.css*/')
 code = read_files('utils', 'out', 'main')
 css = read_file('../sim.css')
 text = ''.join([head, code, middle, css, tail])
-f = open('../sim.html', 'w')
-f.write(text)
+f = io.open('../sim.html', 'w', newline='\r\n')
+f.write(unicode(text))
 f.close()
