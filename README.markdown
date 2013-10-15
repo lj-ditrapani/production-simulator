@@ -114,4 +114,4 @@ TODO:
   Compiles CoffeeScript -> JavaScript and inserts final JavaScript and CSS
   into sim\_template.html to produce standalone sim.html
   (currently uses rhino, shell, & python to accomplish this)
-- Add mark of the web?
+- Put sim.html on ditrapani.info?
