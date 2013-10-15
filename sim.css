@@ -106,7 +106,7 @@ input.selected
 
 input.unselected
 {
-    background-color: 999;
+    background-color: #EEE;
     border: 1px solid;
     border-color: #fff #000 #000 #fff;
 }
