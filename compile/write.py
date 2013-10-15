@@ -1,3 +1,5 @@
+import io
+
 code = ''
 line = ''
 while True:
@@ -5,6 +7,6 @@ while True:
     if line == '#-EXIT-':
         break
     code += line + '\n'
-f = open('../js/out.js', 'w')
-f.write(code)
+f = io.open('../js/out.js', 'w', newline='\n')
+f.write(unicode(code))
 f.close()
