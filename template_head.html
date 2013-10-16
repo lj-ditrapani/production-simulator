@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Author:  Lyall Jonathan Di Trapani ======================== -->
+    <!-- saved from url=(0030)http://ditrapani.info/sim.html -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title> Velocity Production Simulator Exercise </title>
+    <script type="text/javascript">
+//utils out main
+    </script>
+    <style type="text/css">
+/*sim.css*/
+    </style>
+</head>
+
+<body>
+
+    <div id="buttons">
+        <input type="button" value="Configure" class="selected"
+               id="config_button" onClick="sim.show_div('config');" />
+        <input type="button" value="Run" class="unselected"
+               id="run_button" onClick="sim.show_div('run');" />
+        <input type="button" value="Results" class="unselected"
+               id="results_button" onClick="sim.show_div('results');" />
+        <input type="button" value="Summary" class="unselected"
+               id="summary_button" onClick="sim.show_div('summary');" />
+    </div>
+
+    <div id="config" class="visible">
+        <div id="config_panel">
+        <h3> Config </h3>
+        <div id="controls">
+            <div class="control"> Number of Teams 
+                <input name="num_teams" id="num_teams" value="7"
+                       class="number_entry" type="text" />
+            </div>
+            <div class="control"> Number of Stations
+                <input name="num_stations" id="num_stations" value="10"
+                       class="number_entry" type="text" />
+            </div>
+            <div class="control"> Round #
+                <input name="round_num" id="round_num" value="1"
+                       class="number_entry" type="text" />
+            </div>
+            <div class="control"> Number of Steps
+                <input name="num_steps" id="num_steps" value="20"
+                       class="number_entry" type="text" />
+            </div>
+            <div class="control"> Maximum Inducted WIP
+                <input name="inducted_wip" id="inducted_wip" value="85"
+                       class="number_entry" type="text" />
+            </div>
+            <div>
+                <input id="setup_button" type="button" 
+                       value="Set-up Simulation" 
+                       onClick="sim.setup();"/>
+            </div>
+        </div>  <!-- End controls -->
+        </div>  <!-- End config_panel -->
+
+        <p>
+        Rules for each round:
+        </p>
+
+<!-- ============ Documentation ==================================== -->
+<div class="doc"> 
+<pre>
+            Variation   Variation
+            in          in
+            capacity    capacity
+            at S3       at other stations
+------------------------------------------------------------------------
+Round 1:    1-6         1-6
+Round 2:    1-6         2-12
+Round 3:    1-6         2-12       Capacity of S1 matches capacity of S3
+Round 4:    4-6         2-12       Capacity of S1 matches capacity of S3
+                                   WIP at S3 is 9 instead of 4
+Round 5:    Same as round 4 but S1 cannot induct more than the "Maximum
+            Inducted WIP".  Also S1 will help S3 once S1 WIP is 
+            exhausted (the capacity at S3 double---goes to 8-12).
+Round 6:    Same as round 5
+</pre>
+</div>
+
+<p>
+Definition of terms:
+</p>
+
+<div class="doc">
+<dl>
+<dt>
+Station
+</dt>
+<dd>
+A sequential work station in a process.
+</dd>
+<dt>
+Team
+</dt>
+<dd>
+Sequence of work stations.  Each station's output (units produced) is the input to the next station.  The output (units produced) is added to the WIP of the next station.
+</dd>
+<dt>
+Capacity
+</dt>
+<dd>
+How much a station can produce in a given step.
+</dd>
+<dt>
+WIP
+</dt>
+<dd>
+Work in progress:  how many units a station has available to work on.
+</dd>
+<dt>
+Produced
+</dt>
+<dd>
+How many units the station actually produces in a given step.  
+<pre>
+If capacity > WIP then 
+    produced = WIP 
+else
+    produced = capacity
+</pre>
+</dd>
+<dt>
+Variation
+</dt>
+<dd>
+Variation is represented by dice.  A variation of 1-6 means one 6-sided die is used to determine capacity.  A variation of 2-12 means two 6-sided dice are used to determine capacity.
+</dd>
+<dt>
+Maximum Inducted WIP
+</dt>
+<dd>
+The "Maximum Inducted WIP" only effects rounds 5 and 6.  It limits the amount of WIP S1 can induct into the system.
+</dd>
+<dt>
+S1, S2, ...
+</dt>
+<dd>
+S1 refers to Station 1, S2 refers to Station 2, etc.
+</dd>
+<dt>
+T1, T2, ...
+</dt>
+<dd>
+T1 refers to Team 1, T2 refers to Team 2, etc.
+</dd>
+<dt>
+R1, R2, ...
+</dt>
+<dd>
+R1 refers to Round 1, R2 refers to Round 2, etc.  W1 refers to the WIP for Round 1.  P1 refers to the amount produced for Round 1.
+</dd>
+<dt>
+W1, W2, ...
+</dt>
+<dd>
+W1 refers to the WIP for Round 1.  P1 refers to the amount produced for Round 1.
+</dd>
+<dt>
+P1, P2, ...
+</dt>
+<dd>
+P1 refers to the amount produced for Round 1.
+</dd>
+</dl>
+</div>
+
+    </div>
+    <div id="run" class="invisible">
+        <div> 
+            <div class="label">
+            Round Number: <span id="round_num_label"> 1 </span> 
+            </div>
+            <div class="label">
+            Step Number: <span id="step_number_label"> 0 </span>
+            </div>
+        </div>
+        <input id="step_button" type="button" value="Step >" 
+               onClick="sim.step_();">
+        <input id="simulate_button" type="button" value="Simulate >>>"
+               onClick="sim.simulate();">
+        <h3> Current Capacity </h3>
+        <table id="capacity_table"> </table>
+        <h3> Current Produced </h3>
+        <table id="produced_table"> </table>
+        <h3> Current WIP </h3>
+        <table id="wip_table"> </table>
+    </div>
+    <div id="results" class="invisible">
+        <h3> Total Capacity </h3>
+        <table id="total_capacity_table"> </table>
+        <h3> Total Produced </h3>
+        <table id="total_produced_table"> </table>
+        <h3> Utilization (%) </h3>
+        <table id="utilization_table"> </table>
+        <h3> Efficiency (%) </h3>
+        <table id="efficiency_table"> </table>
+    </div>
+    <div id="summary" class="invisible">
+        <h3> WIP/Produced </h3>
+        <table> 
+        <thead id="wip_prod_thead"> </thead>
+        <tbody id="wip_prod_tbody"> </tbody>
+        </table>
+        <h3> High/Average/Low of WIP/Produced </h3>
+        <table> 
+        <thead id="average_thead"> </thead>
+        <tbody id="average_tbody"> </tbody>
+        </table>
+        <h3> Station 3 Missed Opportunity </h3>
+        <table> 
+        <thead id="missed_op_thead"> </thead>
+        <tbody id="missed_op_tbody"> </tbody>
+        </table>
+        <h3> Average utilization for each round and station (%) </h3>
+        <table> 
+        <thead id="summary_util_thead"> </thead>
+        <tbody id="summary_util_tbody"> </tbody>
+        </table>
+        <h3> Average efficiency for each round and station (%) </h3>
+        <table> 
+        <thead id="summary_efficiency_thead"> </thead>
+        <tbody id="summary_efficiency_tbody"> </tbody>
+        </table>
+    </div>
+    <ul id="output_"> </ul>
+</body></html>
