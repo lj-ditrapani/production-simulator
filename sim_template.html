@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
     <div id="buttons">
         <input type="button" value="Configure" class="selected"
                id="config_button" onClick="sim.show_div('config');" />
@@ -24,7 +25,9 @@
         <input type="button" value="Summary" class="unselected"
                id="summary_button" onClick="sim.show_div('summary');" />
     </div>
+
     <div id="config" class="visible">
+        <div id="config_panel">
         <h3> Config </h3>
         <div id="controls">
             <div class="control"> Number of Teams 
@@ -52,14 +55,16 @@
                        value="Set-up Simulation" 
                        onClick="sim.setup();"/>
             </div>
-        </div>
+        </div>  <!-- End controls -->
+        </div>  <!-- End config_panel -->
 
         <p>
         Rules for each round:
         </p>
 
-<div class="doc">
-        <pre>
+<!-- ============ Documentation ==================================== -->
+<div class="doc"> 
+<pre>
             Variation   Variation
             in          in
             capacity    capacity
@@ -74,7 +79,7 @@ Round 5:    Same as round 4 but S1 cannot induct more than the "Maximum
             Inducted WIP".  Also S1 will help S3 once S1 WIP is 
             exhausted (the capacity at S3 double---goes to 8-12).
 Round 6:    Same as round 5
-        </pre>
+</pre>
 </div>
 
 <p>
