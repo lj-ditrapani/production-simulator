@@ -3,6 +3,8 @@ Production Simulator
 
 Author: Lyall Jonathan Di Trapani
 
+To use the production simulator, go to ditrapani.info/sim.html.  You may download the sim.html file for offline use.
+
 This is a browser-based, production simulator that illustrates 
 constraint theory and project management concepts, specifically 
 bottlenecks and variation, in AFIT course LOG 238:  Critical Chain 
@@ -89,18 +91,17 @@ TODO:
 - "Show all panels" button (make config, run, results & summary visible
   at same time).  If you click on config, run, results, or summary 
   buttons, it hides the other panels automatically
-  Only useful in sim\_coffee.html for quick testing
+  Only useful in `sim_coffee.html` for quick testing
 - Simulate all rounds:  run simulation for rounds 1-6 in sequence for 
   current config (is this useful outside of testing?)
     setup()
     for round_num in [1..6]
         sim.round_num = round_num
 - autofetch dependencies?  qunit, rhino, CoffeeScript
-  (assume python and sh)
-- should qunit and rhino be added to .gitignore?
+  (assume python, java and sh)
 - make js/utils a seperate project and submodule?
     - write in CoffeeScript and add unit tests
-- get rid of sim\_js.html?  Not used in testing anymore and broken.
+- get rid of `sim_js.html`?  Not used in testing anymore and broken.
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that 
@@ -110,8 +111,7 @@ TODO:
       (closure on array & index, move index along).  Known values.
     - Run simulation
     - Check data output from simulation matches expectations
-- Provide alternate build (compile) via node.js 
-  Compiles CoffeeScript -> JavaScript and inserts final JavaScript and CSS
-  into sim\_template.html to produce standalone sim.html
-  (currently uses rhino, shell, & python to accomplish this)
-- Put sim.html on ditrapani.info?
+- Provide alternate build (compile) via node.js. 
+  Compiles CoffeeScript -> JavaScript and inserts final JavaScript and 
+  CSS into `sim_template.html` to produce standalone sim.html
+  (currently uses rhino, shell, & python to accomplish this).

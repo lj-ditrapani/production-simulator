@@ -64,7 +64,7 @@ class sim.Station
 
     is_active: (round_num) ->
         if @wip > 0
-            true                # Must produce in WIP available
+            true                # Must produce if WIP available
         else if @num == 1 and round_num < 5
             true                # Continue to induct WIP
         else

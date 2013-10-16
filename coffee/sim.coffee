@@ -65,7 +65,7 @@ sim.step_ = () ->
     if sim.lock_num_steps and sim.step_num == sim.num_steps
         return
     step_data(sim.round_num, sim.teams)
-    # display capacity, total_capacity, total_produced, 
+    # display capacity, total_capacity, total_produced,
     #         curr_wip, total_wips
     display(sim.step_num, sim.teams)
     sim.summary.display(sim.teams)
@@ -119,19 +119,19 @@ is_value_ok = (name, value) ->
 
 generate_sim = (num_teams, num_stations) ->
     # create stations, teams, and tables for simulation
-    sim.teams = sim.team.make_teams num_teams, 
-                                    num_stations, 
-                                    sim.round_num, 
+    sim.teams = sim.team.make_teams num_teams,
+                                    num_stations,
+                                    sim.round_num,
                                     sim.inducted_wip
     display(sim.step_num, sim.teams)
-    names = ['capacity', 'wip', 'produced', 'total_capacity', 
+    names = ['capacity', 'wip', 'produced', 'total_capacity',
              'total_produced', 'utilization', 'efficiency']
     make_table name, num_teams, num_stations for name in names
     sim.summary.display(sim.teams)
 
 
 make_table = (name, num_teams, num_stations) ->
-    # name = capacity | wip | produced | 
+    # name = capacity | wip | produced |
     #        total_capacity | total_produced | utilization
     table = $ name + '_table'
     dom.removeAllChildren table
@@ -158,7 +158,7 @@ make_table = (name, num_teams, num_stations) ->
 
 display = (step_num, teams) ->
     # Display state of stations and totals in all tables
-    # tables: capacity, curr_wip, produced, 
+    # tables: capacity, curr_wip, produced,
     #         total_capacity, total_wips, total_produced, utilization
     dom.set_text($('step_number_label'), step_num)
     for team in teams

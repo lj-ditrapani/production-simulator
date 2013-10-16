@@ -1,4 +1,4 @@
-/** ---------------------------------------------------------------------
+/** --------------------------------------------------------------------
  * Author:  Lyall Jonathan Di Trapani
  * sim style sheet
  */
@@ -109,4 +109,25 @@ input.unselected
     background-color: #EEE;
     border: 1px solid;
     border-color: #fff #000 #000 #fff;
+}
+
+div.doc
+{
+    background-color: #EEE;
+    width: 600px;
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+dt
+{
+    border: 1px solid #000;
+    width: 200px;
+    font-weight: bold;
+    padding: 1px 0px 1px 5px;
+}
+
+dd
+{
+    padding: 3px 0px 10px 0px;
 }
