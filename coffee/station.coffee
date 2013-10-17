@@ -45,7 +45,7 @@ class TDTags
 
     clear_highlights: () ->
         @total_capacity.className = ''
-        # @missed_op.className = ''
+        @missed_op.className = ''
 
 
 class sim.Station

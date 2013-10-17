@@ -74,12 +74,15 @@ class team.Team
     display: (step_num) ->
         for station in @stations
             station.display(step_num, @round_num)
+        @update_highlighting()
+        dom.set_text @total_wip_td, @get_total_wip()
+
+    update_highlighting: () ->
         @clear_highlights_from_stations()
         stations = @get_stations_with_min_total_capacity()
         @highligt_stations(stations, 'total_capacity')
         stations = @get_stations_with_max_missed_op()
-        #@highligt_stations(stations, 'missed_op')
-        dom.set_text @total_wip_td, @get_total_wip()
+        @highligt_stations(stations, 'missed_op')
 
     get_total_wip: () ->
         sum = (list) ->
