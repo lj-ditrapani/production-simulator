@@ -77,6 +77,7 @@ step_data = (round_num, teams) ->
         t.update()
     sim.step_num += 1
     # udpate summary wip, produced, H/Avg/L, s3 missed op, utilization
+    # efficiency and missed op
     if sim.step_num == sim.num_steps
         sim.summary.update(round_num, teams, sim.step_num)
 
@@ -124,15 +125,15 @@ generate_sim = (num_teams, num_stations) ->
                                     sim.round_num,
                                     sim.inducted_wip
     display(sim.step_num, sim.teams)
-    names = ['capacity', 'wip', 'produced', 'total_capacity',
-             'total_produced', 'utilization', 'efficiency']
+    names = ['capacity', 'produced', 'wip', 'total_capacity',
+             'total_produced', 'missed_op', 'utilization', 'efficiency']
     make_table name, num_teams, num_stations for name in names
     sim.summary.display(sim.teams)
 
 
 make_table = (name, num_teams, num_stations) ->
-    # name = capacity | wip | produced |
-    #        total_capacity | total_produced | utilization
+    # name = capacity | produced wip | total_capacity | total_produced
+    #        | missed_op | utilization | efficiency
     table = $ name + '_table'
     dom.removeAllChildren table
     make_row = (index) ->
@@ -158,8 +159,8 @@ make_table = (name, num_teams, num_stations) ->
 
 display = (step_num, teams) ->
     # Display state of stations and totals in all tables
-    # tables: capacity, curr_wip, produced,
-    #         total_capacity, total_wips, total_produced, utilization
+    # tables: capacity, produced, wip, total_capacity, total_wips, 
+    # total_produced, missed_op, utilization, and efficiency
     dom.set_text($('step_number_label'), step_num)
     for team in teams
         team.display(step_num)
