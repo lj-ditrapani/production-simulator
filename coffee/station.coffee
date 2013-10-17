@@ -39,6 +39,13 @@ class TDTags
         for i in [0...names.length]
             dom.set_text this[names[i]], values[i]
 
+    highlight: (field_name) ->
+        this[field_name].className = 'highlight'
+
+    clear_highlights: () ->
+        @total_capacity.className = ''
+        # @missed_op.className = ''
+
 
 class sim.Station
     # Represents a single work station on a single team
@@ -110,6 +117,13 @@ class sim.Station
         else
             Math.round(@total_produced * 1.0 / @total_capacity * 100)
 
+    get_total_capacity: () ->
+        @total_capacity
+
+    get_missed_op: () ->
+        # Missed opportunity
+        @total_capacity - @total_produced
+
     add_tds: (capacity, wip, produced, total_capacity, 
               total_produced, utilization, efficiency) ->
         @tds = new TDTags(capacity, wip, produced, total_capacity,
@@ -131,3 +145,9 @@ class sim.Station
                       @total_produced,
                       @get_utilization(step_num),
                       @get_efficiency()]
+
+    highlight: (field_name) ->
+        @tds.highlight(field_name)
+
+    clear_highlights: () ->
+        @tds.clear_highlights()

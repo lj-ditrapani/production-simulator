@@ -186,3 +186,14 @@ test 'get_efficiency', ->
     s.roll_dice()       # adds 12 to total_cap -> 12 + 19 = 31
     s.update(1)         # adds 3 to total_prod -> 3 + 9 = 12
     equal s.get_efficiency(), 39, '12 total_prod / 31 total_cap = 39%'
+
+
+test 'get_missed_op (missed opportunity)', ->
+    s = @station
+    equal s.get_missed_op(), 2, 'Initially missed 7 - 5 = 2' 
+    s.roll_dice()       # adds 12 to total_cap -> 7 + 12 = 19
+    s.update(1)         # adds 4 to total_prod -> 4 + 5 = 9
+    equal s.get_missed_op(), 19 - 9, 'Misses 8 more; 12 - 4 = 8'
+    s.roll_dice()       # adds 12 to total_cap -> 19 + 12 = 31
+    s.update(1)         # adds 3 to total_prod -> 3 + 9 = 12
+    equal s.get_missed_op(), 31 - 12, 'Misses 9 more; 12 - 3 = 9'

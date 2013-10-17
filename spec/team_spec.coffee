@@ -251,15 +251,51 @@ test 'get_total_produced', ->
         equal t.get_total_produced(), value
 
 
-test 'get_missed_op', ->
+test 'get_missed_op3 (Missed opportunity for station 3)', ->
     t = make_test_team 4, 1, 100
     s3 = t.get_station(3)
     equal s3.wip, 4, 'has 4 available as WIP'
     t.update()
     equal s3.capacity, 2, 'can produce up to 2 (capacity)'
-    equal t.get_missed_op(), 0, '2 < 4, no missed op'
+    equal t.get_missed_op3(), 0, '2 < 4, no missed op'
     s3.dice.random = () -> 0.999
     equal s3.wip, 4, 'has 4 available as WIP'
     t.update()
     equal s3.capacity, 6, 'can produce up to 6 (capacity)'
-    equal t.get_missed_op(), 2, '6 - 4 = 2'
+    equal t.get_missed_op3(), 2, '6 - 4 = 2'
+
+
+module 'team [min/max highlighting]',
+    setup: ->
+        # S1 always rolls 6, others roll 2
+        # num_stations, round_num, inducted_wip
+        @team = make_test_team 4, 1, 10 
+        s1 = @team.stations[1]
+        s1.total_capacity = -1
+        s2 = @team.stations[2]
+        s2.total_capacity = -1
+        s0 = @team.stations[0]
+        s0.total_capacity = 10
+        s0.total_produced = 1
+        s3 = @team.stations[3]
+        s3.total_capacity = 10
+        s3.total_produced = 1
+        @get_pair_nums = (pair) -> [pair[0].num, pair[1].num]
+
+
+test 'get_min_max_value', ->
+    t = @team
+    equal t.get_min_max_value('min', 'total_capacity'), -1, 'min t_cap'
+    equal t.get_min_max_value('max', 'missed_op'), 9, 'max misssed_op'
+
+
+test 'get_stations_with_min_total_capacity', ->
+    t = @team
+    pair = @get_pair_nums(t.get_stations_with_min_total_capacity())
+    deepEqual pair, [2, 3]
+
+
+test 'get_stations_with_max_missed_op', ->
+    t = @team
+    pair = @get_pair_nums(t.get_stations_with_max_missed_op())
+    deepEqual pair, [1, 4]

@@ -74,6 +74,11 @@ class team.Team
     display: (step_num) ->
         for station in @stations
             station.display(step_num, @round_num)
+        @clear_highlights_from_stations()
+        stations = @get_stations_with_min_total_capacity()
+        @highligt_stations(stations, 'total_capacity')
+        stations = @get_stations_with_max_missed_op()
+        #@highligt_stations(stations, 'missed_op')
         dom.set_text @total_wip_td, @get_total_wip()
 
     get_total_wip: () ->
@@ -84,9 +89,10 @@ class team.Team
             result
         sum(s.wip for s in @stations[1..])
 
-    get_missed_op: () ->
+    get_missed_op3: () ->
+        # Missed opportunity at station 3
         s3 = @get_station(3)
-        s3.total_capacity - s3.total_produced
+        s3.get_missed_op()
 
     get_utilization: (station_num, step_num) ->
         @get_station(station_num).get_utilization step_num
@@ -96,6 +102,35 @@ class team.Team
 
     get_total_produced: () ->
         @stations[@stations.length - 1].total_produced
+
+    get_stations_with_min_total_capacity: () ->
+        @get_stations_with_min_max_value('min', 'total_capacity')
+
+    get_stations_with_max_missed_op: () ->
+        @get_stations_with_min_max_value('max', 'missed_op')
+
+    get_stations_with_min_max_value: (min_or_max, field_name) ->
+        value = @get_min_max_value(min_or_max, field_name)
+        @get_stations_with_value(field_name, value)
+
+    get_min_max_value: (min_or_max, field_name) ->
+        get_value = "get_#{field_name}"
+        values = (station[get_value]() for station in @stations)
+        Math[min_or_max].apply Math, values
+
+    get_stations_with_value: (field_name, value) ->
+        array = []
+        for s in @stations
+            s_value = s["get_#{field_name}"]()
+            if s_value == value
+                array.push s
+        array
+
+    clear_highlights_from_stations: () ->
+        (s.clear_highlights() for s in @stations)
+
+    highligt_stations: (stations, field_name) ->
+        s.highlight(field_name) for s in stations
 
     get_table_row: (name) ->
         row = (station.get_td name for station in @stations)

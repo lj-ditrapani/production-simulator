@@ -16,11 +16,11 @@ class sim.Summary
     # 4 summary tables:
     # wip/produced, H/Avg/L, s3 missed op, utilization
     constructor: (num_teams, num_stations) ->
-        # Creates 2D arrays for summary wip, produced, missed_op, util
+        # Creates 2D arrays for summary wip, produced, missed_op3, util
         @NUM_STATIONS = num_stations
         @wip = make_zero_grid num_teams, NUM_ROUNDS
         @produced = make_zero_grid num_teams, NUM_ROUNDS
-        @missed_op = make_zero_grid num_teams, NUM_ROUNDS
+        @missed_op3 = make_zero_grid num_teams, NUM_ROUNDS
         @utilization = make_zero_grid num_stations, NUM_ROUNDS
         @efficiency = make_zero_grid num_stations, NUM_ROUNDS
 
@@ -29,7 +29,7 @@ class sim.Summary
         if round_num > NUM_ROUNDS or round_num < 1
             return
         @update_wip_prod round_num, teams 
-        @update_missed_op round_num, teams 
+        @update_missed_op3 round_num, teams 
         @update_utilization round_num, teams, step_num
         @update_efficiency round_num, teams
 
@@ -44,11 +44,11 @@ class sim.Summary
             s.produced[team_index][round_index] = total_produced
         map update_team_values, [0...teams.length]
 
-    update_missed_op: (round_num, teams) ->
+    update_missed_op3: (round_num, teams) ->
         round_index = round_num - 1
         for team_index in [0...teams.length]
-            val = teams[team_index].get_missed_op()
-            @missed_op[team_index][round_index] = val
+            val = teams[team_index].get_missed_op3()
+            @missed_op3[team_index][round_index] = val
 
     update_utilization: (round_num, teams, step_num) ->
         round_index = round_num - 1
@@ -66,7 +66,7 @@ class sim.Summary
     display: (teams) ->
         @display_wip_prod()
         @display_average()
-        @display_missed_op teams
+        @display_missed_op3 teams
         @display_utilization teams
         @display_efficiency teams
 
@@ -84,12 +84,12 @@ class sim.Summary
         attrs = {className: 'wip'}
         make_body(this, null, 'average', 3, funcs, '', attrs)
 
-    display_missed_op: (teams) ->
+    display_missed_op3: (teams) ->
         # teams X rounds (Station 3 only!)
-        reset_table 'missed_op'
+        reset_table 'missed_op3'
         bound = teams.length
-        funcs = ['get_missed_op']
-        make_body(this, teams, 'missed_op', bound, funcs, 'T', {})
+        funcs = ['get_missed_op3']
+        make_body(this, teams, 'missed_op3', bound, funcs, 'T', {})
 
     display_utilization: (teams) ->
         # station X round (average utilization across teams)
@@ -132,8 +132,8 @@ class sim.Summary
             when 'Low'
                 Math.min.apply null, values
 
-    get_missed_op: (teams, i, j, label) ->
-        @missed_op[i][j]
+    get_missed_op3: (teams, i, j, label) ->
+        @missed_op3[i][j]
 
     get_utilization: (teams, i, j, label) ->
         @utilization[i][j]
