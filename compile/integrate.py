@@ -26,15 +26,14 @@ def make_test_file(head_file, out_file):
     make_html_file(head_text, out_file)
 
 
-def make_html_file(head_text, out_file)
+def make_html_file(head_text, out_file):
     template_body = read_file('../template_body.html')
     write_file(out_file, insert_head(head_text, template_body))
 
 
 def insert_head(head_text, template_body):
-    pre_head_text, body_text = template_body.split('<head></head>')
-    wrapped_head_text = '<head>\n{0}\n</head>'.format(head_text)
-    return '\n'.join([pre_head_text, wrapped_head_text, body_text])
+    pre_head_text, body_text = template_body.split('<!-- insert head -->', 1)
+    return '\n'.join([pre_head_text, head_text, body_text])
 
 
 def make_sim_file():
