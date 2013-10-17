@@ -24,7 +24,7 @@ or
 
     $ sh compile.sh
 
-produces `sim.html` and `js/out.js`
+produces `sim.html`, `js/out.js`, `sim_js.html`, and `sim_coffee.html`
 
 The final, self-contained product:  `sim.html`
 Open `sim.html` in a web-browser to run simulations (ensure you allow 
@@ -44,14 +44,14 @@ Directories
 - **compile**:  tools to compile coffee -> js and 
                 generate final, integrated html
 - **js**:       production JavaScript code--out.js compiled from coffee
-- **lib**:      3rd party libraries for testing (javascript, css)
+- **lib**:      3rd party libraries for testing (JavaScript, css)
                 qunit.css qunit.js coffee-script.js
 - **spec**:     specification code, (CoffeeScript)
 
 
 Depenencies (only needed for compiling and testing)
 ------------------------------------------------------------------------
-**rhino.jar**: JavaScript interpreter written in Java from mozilla
+**rhino.jar**: JavaScript interpreter written in Java from Mozilla
 https://developer.mozilla.org/en-US/docs/Rhino .
 Expected to be in
 `compile/rhino.jar`
@@ -87,7 +87,6 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
-- List round rules on cofig page
 - "Show all panels" button (make config, run, results & summary visible
   at same time).  If you click on config, run, results, or summary 
   buttons, it hides the other panels automatically
@@ -99,9 +98,8 @@ TODO:
         sim.round_num = round_num
 - autofetch dependencies?  qunit, rhino, CoffeeScript
   (assume python, java and sh)
-- make js/utils a seperate project and submodule?
+- make js/utils a separate project and submodule?
     - write in CoffeeScript and add unit tests
-- get rid of `sim_js.html`?  Not used in testing anymore and broken.
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that 
