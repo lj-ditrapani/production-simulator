@@ -3,7 +3,8 @@ Production Simulator
 
 Author: Lyall Jonathan Di Trapani
 
-To use the production simulator, go to ditrapani.info/sim.html.  You may download the sim.html file for offline use.
+To use the production simulator, go to http://ditrapani.info/sim.html.  
+You may download the sim.html file for offline use.
 
 This is a browser-based, production simulator that illustrates 
 constraint theory and project management concepts, specifically 
