@@ -1,7 +1,10 @@
 js/out.js
+sim_js.html
+sim_coffee.html
 sim.html
 lib/qunit.js
 lib/qunit.css
 lib/coffee-script.js
 lib
 compile/rhino.jar
+compile/integrate.pyc
