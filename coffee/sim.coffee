@@ -41,7 +41,7 @@ sim.show_div = (name) ->
     names = remove names, name
     for name in names
         hide name
-        change_class (name + '_button'), 'unselected'
+        change_class (name + '_button'), ''
 
 
 sim.hide_docs = () ->

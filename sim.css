@@ -93,18 +93,22 @@ ul#output_
     text-align: left;
 }
 
-input.selected
-{
-    background-color: #CCF0FF;
-    border: 1px solid;
-    border-color: #79B #357 #357 #79B;
-}
-
-input.unselected
+input[type="button"]
 {
     background-color: #EEE;
     border: 1px solid;
     border-color: #fff #000 #000 #fff;
+}
+
+input.selected
+{
+    background-color: #CCF0FF;
+    border-color: #79B #357 #357 #79B;
+}
+
+input#setup_button
+{
+    margin: 3px 0px 0px 0px;
 }
 
 div.doc
