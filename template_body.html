@@ -51,9 +51,17 @@
         </div>  <!-- End controls -->
         </div>  <!-- End config_panel -->
 
-        <p>
-        Rules for each round:
-        </p>
+<div class="doc_button">
+<input type="button" value="Hide Documentation"
+       id="hide_docs" onClick="sim.hide_docs();" />
+<input type="button" value="Show Documentation" class="invisible"
+       id="show_docs" onClick="sim.show_docs();" />
+</div>
+
+<div id="doc">
+<p>
+Rules for each round:
+</p>
 
 <!-- ============ Documentation ==================================== -->
 <div class="doc"> 
@@ -73,7 +81,7 @@ Round 5:    Same as round 4 but S1 cannot induct more than the "Maximum
             exhausted (the capacity at S3 double---goes to 8-12).
 Round 6:    Same as round 5
 </pre>
-</div>
+</div> <!-- end round rules in div.doc -->
 
 <p>
 Definition of terms:
@@ -160,9 +168,11 @@ P1, P2, ...
 P1 refers to the amount produced for Round 1.
 </dd>
 </dl>
-</div>
+</div>  <!-- end definition list in div.doc -->
+</div>  <!-- end div#doc -->
 
-    </div>
+    </div> <!-- end div#config -->
+
     <div id="run" class="invisible">
         <div> 
             <div class="label">

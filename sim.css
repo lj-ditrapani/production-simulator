@@ -72,10 +72,6 @@ div#config_panel
     width: 300px;
 }
 
-div.control
-{
-}
-
 div#controls
 {
     text-align: right;
@@ -85,11 +81,6 @@ input.number_entry
 {
     width: 60px;
     text-align: right;
-}
-
-.visible
-{
-    display: block;
 }
 
 .invisible
@@ -136,3 +127,11 @@ dd
 {
     padding: 3px 0px 10px 0px;
 }
+
+div.doc_button
+{
+    width: 620px;
+    text-align: right;
+    padding: 10px 0px 0px 0px;
+}
+

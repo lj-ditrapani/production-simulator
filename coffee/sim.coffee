@@ -35,14 +35,37 @@ map = (f, list) ->
 
 
 sim.show_div = (name) ->
-    div = $ name
-    div.className = 'visible'
-    $(name + '_button').className = 'selected'
+    show name
+    change_class (name + '_button'), 'selected'
     names = ['config', 'run', 'results', 'summary']
     names = remove names, name
     for name in names
-        $(name).className = 'invisible'
-        $(name + '_button').className = 'unselected'
+        hide name
+        change_class (name + '_button'), 'unselected'
+
+
+sim.hide_docs = () ->
+    hide 'doc'
+    hide 'hide_docs'
+    show 'show_docs'
+
+
+sim.show_docs = () ->
+    hide 'show_docs'
+    show 'hide_docs'
+    show 'doc'
+
+
+show = (id) ->
+    change_class id, ''
+
+
+hide = (id) ->
+    change_class id, 'invisible'
+
+
+change_class = (id, className) ->
+    $(id).className = className
 
 
 remove = (list, el_to_remove) ->
