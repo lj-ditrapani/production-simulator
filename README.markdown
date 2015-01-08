@@ -87,17 +87,8 @@ Understanding the different HTML files
 TODO:
 ------------------------------------------------------------------------
 - Add utilization and efficiency to "Definition of terms"
-- "Show all panels" button (make config, run, results & summary visible
-  at same time).  If you click on config, run, results, or summary
-  buttons, it hides the other panels automatically
-  Only useful in `sim_coffee.html` for quick testing
-- Simulate all rounds:  run simulation for rounds 1-6 in sequence for
-  current config (is this useful outside of testing?)
-    setup()
-    for round_num in [1..6]
-        sim.round_num = round_num
-- autofetch dependencies?  qunit, rhino, CoffeeScript
-  (assume python, java and sh)
+- Auto-fetch dependencies?  qunit, rhino, CoffeeScript.
+  Assume python, java and sh.  Or use rake or jake instead?
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that
@@ -107,7 +98,23 @@ TODO:
       (closure on array & index, move index along).  Known values.
     - Run simulation
     - Check data output from simulation matches expectations
+
+Compile Using node.js
 - Provide alternate build (compile) via node.js.
   Compiles CoffeeScript -> JavaScript and inserts final JavaScript and
   CSS into `sim_template.html` to produce standalone sim.html
   (currently uses rhino, shell, & python to accomplish this).
+  First attempt: `compile_node.sh` is not correct because it does not
+  use one module per file.
+  Need to compile each file separately and then join them together.
+
+Other ideas (testing only?)
+- "Show all panels" button (make config, run, results & summary visible
+  at same time).  If you click on config, run, results, or summary
+  buttons, it hides the other panels automatically
+  Only useful in `sim_coffee.html` for quick testing
+- Simulate all rounds:  run simulation for rounds 1-6 in sequence for
+  current config (is this useful outside of testing?)
+    setup()
+    for round_num in [1..6]
+        sim.round_num = round_num
