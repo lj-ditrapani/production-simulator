@@ -25,7 +25,7 @@ coffee -cj ../js/out.js ../coffee/sim.coffee ../coffee/station.coffee ../coffee/
 #   fs.writeFile 'source.js', compiled, (err) ->
 #       console.log "Done."
 
-# use cake??
-# Define a Cakefile with a build task, all code can go in this file.
+# use jake (or cake)??
+# Define a Jakefile with a build task, all code can go in this file.
 # Compile all coffee files, join code together, write to js/out.js
-# Simply cake build at command line (cake [task])
+# Simply jake build at command line (jake [task])
