@@ -99,8 +99,12 @@ TODO:
     - Run simulation
     - Check data output from simulation matches expectations
 
-Compile Using node.js
-- Provide alternate build (compile) via node.js.
+Ideas
+- Use angularjs?  Number of teams and number of stations become ng-model
+  and create the table dimensions which are bound in the HTML template
+  variables using ng-repeat.
+- Compile Using node.js
+  Provide alternate build (compile) via node.js.
   Compiles CoffeeScript -> JavaScript and inserts final JavaScript and
   CSS into `sim_template.html` to produce standalone sim.html
   (currently uses rhino, shell, & python to accomplish this).
