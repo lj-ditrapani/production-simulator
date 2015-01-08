@@ -88,6 +88,7 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
+- Add utilization and efficiency to "Definition of terms"
 - "Show all panels" button (make config, run, results & summary visible
   at same time).  If you click on config, run, results, or summary 
   buttons, it hides the other panels automatically
@@ -99,8 +100,6 @@ TODO:
         sim.round_num = round_num
 - autofetch dependencies?  qunit, rhino, CoffeeScript
   (assume python, java and sh)
-- make js/utils a separate project and submodule?
-    - write in CoffeeScript and add unit tests
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that 
