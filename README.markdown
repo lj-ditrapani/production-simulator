@@ -3,19 +3,19 @@ Production Simulator
 
 Author: Lyall Jonathan Di Trapani
 
-To use the production simulator, go to http://ditrapani.info/sim.html.  
+To use the production simulator, go to http://ditrapani.info/sim.html.
 You may download the sim.html file for offline use.
 
-This is a browser-based, production simulator that illustrates 
-constraint theory and project management concepts, specifically 
-bottlenecks and variation, in AFIT course LOG 238:  Critical Chain 
-Project Management Foundational Concepts.  
+This is a browser-based, production simulator that illustrates
+constraint theory and project management concepts, specifically
+bottlenecks and variation, in AFIT course LOG 238:  Critical Chain
+Project Management Foundational Concepts.
 AFIT/LS:  School of Systems and Logistics.
 
 
 To create sim.html (the production simulator)
 ------------------------------------------------------------------------
-Ensure you have the necessary dependencies 
+Ensure you have the necessary dependencies
 (see Dependencies section below)
 
     $ cd compile
@@ -28,21 +28,21 @@ or
 produces `sim.html`, `js/out.js`, `sim_js.html`, and `sim_coffee.html`
 
 The final, self-contained product:  `sim.html`
-Open `sim.html` in a web-browser to run simulations (ensure you allow 
-blocked content if prompted) or host on a web-server to allow online 
+Open `sim.html` in a web-browser to run simulations (ensure you allow
+blocked content if prompted) or host on a web-server to allow online
 access.
 
 
 Test CoffeesSript code
 ------------------------------------------------------------------------
-To test the CoffeesSript code, open `spec_runner.html` in a web-browser 
+To test the CoffeesSript code, open `spec_runner.html` in a web-browser
 (ensure you allow blocked content if prompted).
 
 
 Directories
 ------------------------------------------------------------------------
 - **coffee**:   production CoffeesSript code
-- **compile**:  tools to compile coffee -> js and 
+- **compile**:  tools to compile coffee -> js and
                 generate final, integrated html
 - **js**:       production JavaScript code--out.js compiled from coffee
 - **lib**:      3rd party libraries for testing (JavaScript, css)
@@ -63,16 +63,14 @@ Create a folder called lib and add the following 3 files
 
     $ mkdir lib
 
-- **CoffeesSript** compiler from http://coffeescript.org/ 
-`lib/coffee-script.js`
+- **CoffeesSript** compiler from http://coffeescript.org/
+  `lib/coffee-script.js`
 - **qUnit** unit testing framework from http://qunitjs.com/
-`lib/qunit.css`
-and
-`lib/qunit.js`
+  `lib/qunit.css` and `lib/qunit.js`
 
-Compiling the CoffeeScript depends on a **Bourne-compatible shell** 
-(like bash or zsh) and **python** to run the `compile.sh`, `wirte.py`, 
-and `integrate.py` scripts.  You could replace these dependencies with 
+Compiling the CoffeeScript depends on a **Bourne-compatible shell**
+(like bash or zsh) and **python** to run the `compile.sh`, `wirte.py`,
+and `integrate.py` scripts.  You could replace these dependencies with
 any scripting/shell language if you rewrote the scripts (node.js could
 replace rhino, shell, and python).
 
@@ -90,10 +88,10 @@ TODO:
 ------------------------------------------------------------------------
 - Add utilization and efficiency to "Definition of terms"
 - "Show all panels" button (make config, run, results & summary visible
-  at same time).  If you click on config, run, results, or summary 
+  at same time).  If you click on config, run, results, or summary
   buttons, it hides the other panels automatically
   Only useful in `sim_coffee.html` for quick testing
-- Simulate all rounds:  run simulation for rounds 1-6 in sequence for 
+- Simulate all rounds:  run simulation for rounds 1-6 in sequence for
   current config (is this useful outside of testing?)
     setup()
     for round_num in [1..6]
@@ -102,14 +100,14 @@ TODO:
   (assume python, java and sh)
 - Create functional tests
     Although we have unit tests for the internal logic,
-    it would be nice to have user-level functional tests to verify that 
+    it would be nice to have user-level functional tests to verify that
     the sim.html is working as required instead of doing manual tests.
     - Tests would provide user input
-    - setup static mock random objects 
+    - setup static mock random objects
       (closure on array & index, move index along).  Known values.
     - Run simulation
     - Check data output from simulation matches expectations
-- Provide alternate build (compile) via node.js. 
-  Compiles CoffeeScript -> JavaScript and inserts final JavaScript and 
+- Provide alternate build (compile) via node.js.
+  Compiles CoffeeScript -> JavaScript and inserts final JavaScript and
   CSS into `sim_template.html` to produce standalone sim.html
   (currently uses rhino, shell, & python to accomplish this).
