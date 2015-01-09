@@ -33,15 +33,15 @@ blocked content if prompted) or host on a web-server to allow online
 access.
 
 
-Test CoffeesSript code
+Test CoffeeSript code
 ------------------------------------------------------------------------
-To test the CoffeesSript code, open `spec_runner.html` in a web-browser
+To test the CoffeeSript code, open `spec_runner.html` in a web-browser
 (ensure you allow blocked content if prompted).
 
 
 Directories
 ------------------------------------------------------------------------
-- **coffee**:   production CoffeesSript code
+- **coffee**:   production CoffeeSript code
 - **compile**:  tools to compile coffee -> js and
                 generate final, integrated html
 - **js**:       production JavaScript code--out.js compiled from coffee
@@ -63,7 +63,7 @@ Create a folder called lib and add the following 3 files
 
     $ mkdir lib
 
-- **CoffeesSript** compiler from http://coffeescript.org/
+- **CoffeeSript** compiler from http://coffeescript.org/
   `lib/coffee-script.js`
 - **qUnit** unit testing framework from http://qunitjs.com/
   `lib/qunit.css` and `lib/qunit.js`
@@ -81,12 +81,25 @@ Understanding the different HTML files
 - `sim_js.html`:         links to `js/out.js`; used for testing
 - `sim_template.html`:   template used to produce `sim.html`
 - `sim.html`:            actual stand-alone product
-- `spec_runner.html`:    runs all CoffeesSript qUnit unit-tests
+- `spec_runner.html`:    runs all CoffeeSript qUnit unit-tests
 
 
 TODO:
 ------------------------------------------------------------------------
 - Add utilization and efficiency to "Definition of terms"
+- Add second data model for rounds 3 & 4 for:
+  "Capacity of S1 matches number produced at last station".
+- Config --- add dopdown:
+  Round 3 & 4 constraint for S1 capacity:
+    - a) Capacity of S1 matches capacity of S3
+    - b) Capacity of S1 matches number produced at last station
+  Causes 'Run' page to display one or the other data-model for R3 & R4
+- Rename Summary page to "Summary with S1 & S3 linked"
+- Add second summary page:  "Summary with S1 & last station linked"
+- Add Comparison page:  Avg WIP & produced for both data models
+  (from second table in Summary)
+
+Nice-to-haves
 - Auto-fetch dependencies?  qunit, rhino, CoffeeScript.
   Assume python, java and sh.  Or use rake or jake instead?
 - Create functional tests
