@@ -23,7 +23,7 @@
         <div id="config_panel">
         <h3> Config </h3>
         <div id="controls">
-            <div class="control"> Number of Teams 
+            <div class="control"> Number of Teams
                 <input name="num_teams" id="num_teams" value="7"
                        class="number_entry" type="text" />
             </div>
@@ -44,8 +44,8 @@
                        class="number_entry" type="text" />
             </div>
             <div>
-                <input id="setup_button" type="button" 
-                       value="Set-up Simulation" 
+                <input id="setup_button" type="button"
+                       value="Set-up Simulation"
                        onClick="sim.setup();"/>
             </div>
         </div>  <!-- End controls -->
@@ -64,7 +64,7 @@ Rules for each round:
 </p>
 
 <!-- ============ Documentation ==================================== -->
-<div class="doc"> 
+<div class="doc">
 <pre>
             Variation   Variation
             in          in
@@ -77,7 +77,7 @@ Round 3:    1-6         2-12       Capacity of S1 matches capacity of S3
 Round 4:    4-6         2-12       Capacity of S1 matches capacity of S3
                                    WIP at S3 is 9 instead of 4
 Round 5:    Same as round 4 but S1 cannot induct more than the "Maximum
-            Inducted WIP".  Also S1 will help S3 once S1 WIP is 
+            Inducted WIP".  Also S1 will help S3 once S1 WIP is
             exhausted (the capacity at S3 doubles---goes to 8-12).
 Round 6:    Same as round 5
 </pre>
@@ -117,10 +117,10 @@ Work in progress:  how many units a station has available to work on.
 Produced
 </dt>
 <dd>
-How many units the station actually produces in a given step.  
+How many units the station actually produces in a given step.
 <pre>
-If capacity &gt; WIP then 
-    produced = WIP 
+If capacity &gt; WIP then
+    produced = WIP
 else
     produced = capacity
 </pre>
@@ -174,15 +174,15 @@ Efficiency
     </div> <!-- end div#config -->
 
     <div id="run" class="invisible">
-        <div> 
+        <div>
             <div class="label">
-            Round Number: <span id="round_num_label"> 1 </span> 
+            Round Number: <span id="round_num_label"> 1 </span>
             </div>
             <div class="label">
             Step Number: <span id="step_number_label"> 0 </span>
             </div>
         </div>
-        <input id="step_button" type="button" value="Step >" 
+        <input id="step_button" type="button" value="Step >"
                onClick="sim.step_();">
         <input id="simulate_button" type="button" value="Simulate >>>"
                onClick="sim.simulate();">
@@ -206,28 +206,38 @@ Efficiency
         <table id="efficiency_table"> </table>
     </div>
     <div id="summary" class="invisible">
-        <h3> WIP/Produced </h3>
-        <table> 
-        <thead id="wip_prod_thead"> </thead>
-        <tbody id="wip_prod_tbody"> </tbody>
+        <h3> WIP </h3>
+        <table>
+        <thead id="wip_thead"> </thead>
+        <tbody id="wip_tbody"> </tbody>
         </table>
-        <h3> High/Average/Low of WIP/Produced </h3>
-        <table> 
-        <thead id="average_thead"> </thead>
-        <tbody id="average_tbody"> </tbody>
+        <h3> Produced </h3>
+        <table>
+        <thead id="prod_thead"> </thead>
+        <tbody id="prod_tbody"> </tbody>
+        </table>
+        <h3> High/Average/Low of WIP </h3>
+        <table>
+        <thead id="average_wip_thead"> </thead>
+        <tbody id="average_wip_tbody"> </tbody>
+        </table>
+        <h3> High/Average/Low of Produced </h3>
+        <table>
+        <thead id="average_prod_thead"> </thead>
+        <tbody id="average_prod_tbody"> </tbody>
         </table>
         <h3> Station 3 Missed Opportunity </h3>
-        <table> 
+        <table>
         <thead id="missed_op3_thead"> </thead>
         <tbody id="missed_op3_tbody"> </tbody>
         </table>
         <h3> Average utilization for each round and station (%) </h3>
-        <table> 
+        <table>
         <thead id="summary_util_thead"> </thead>
         <tbody id="summary_util_tbody"> </tbody>
         </table>
         <h3> Average efficiency for each round and station (%) </h3>
-        <table> 
+        <table>
         <thead id="summary_efficiency_thead"> </thead>
         <tbody id="summary_efficiency_tbody"> </tbody>
         </table>
