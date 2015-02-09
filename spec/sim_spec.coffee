@@ -10,5 +10,5 @@ test 'map', ->
 test 'remove', ->
     name = 'run'
     names = ['config', 'run', 'results']
-    names = sim.remove names, name 
+    names = sim.remove names, name
     deepEqual names, ['config', 'results']
