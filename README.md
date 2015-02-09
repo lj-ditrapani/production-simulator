@@ -86,8 +86,6 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
-- Add utilization and efficiency to "Definition of terms"
-- Remove W1, W2 & P1, P2 from "Definition of terms"
 - Split WIP & Produced into separate tables on Summary page
     - Correct names (WIP vs Produced tables)
     - Use R1 R2 ... as column headings for all 4 tables
