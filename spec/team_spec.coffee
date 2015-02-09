@@ -144,9 +144,9 @@ test 'Team.get_total_wip', ->
 
 test 'make_teams', ->
     num_teams = 3
-    teams = team.make_teams(num_teams, 
-                            5, 
-                            1, 
+    teams = team.make_teams(num_teams,
+                            5,
+                            1,
                             100)
     equal teams.length, num_teams, '3 teams were created'
     equal teams[0].get_station(1).num, 1, 'Has get_station method'
@@ -160,8 +160,8 @@ make_test_teams = (num_teams, num_stations, round_num) ->
 
 check_dimensions = (teams, num_teams, num_stations) ->
     equal teams.length, num_teams, 'teams length is correct'
-    equal teams[teams.length - 1].stations.length, 
-          num_stations, 
+    equal teams[teams.length - 1].stations.length,
+          num_stations,
           'The number of stations is correct'
 
 
@@ -241,7 +241,7 @@ test 'get_table_row(name) name = capacity|wip|total_cap|total_prod', ->
     equal tds.length, 4
     tds = t.get_table_row 'wip'
     equal tds.length, 5
-    
+
 
 test 'get_total_produced', ->
     t = make_test_team 4, 1, 100
