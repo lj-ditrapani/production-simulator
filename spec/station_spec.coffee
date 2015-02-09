@@ -13,7 +13,7 @@ test 'roll_die', ->
 test 'roll_dice', ->
     equal @dice.roll_dice(), 12
 
-        
+
 module 'Station',
     setup: ->
         #            Station num dice_count min wip random
@@ -44,7 +44,7 @@ test 'When a station updates', ->
         ' the previous total_produced + what it produced this step')
     equal station.total_capacity, 7 + 12, ('The new total_capacity =' +
         ' the previous total_capacity + its capacity this step')
-    
+
 
 test "During update, when a station's capacity is > its WIP", ->
     station = @station
@@ -88,19 +88,19 @@ test 'When Station 1 has 0 WIP on round 1 and it updates', ->
     station.roll_dice()
     station.update(1)
     s = station
-    deepEqual [s.wip, s.produced, s.total_produced, s.total_capacity], 
-              [0, 6, 11, 13], 
+    deepEqual [s.wip, s.produced, s.total_produced, s.total_capacity],
+              [0, 6, 11, 13],
               "After 1st step, WIP=#{s.wip} produced=#{s.produced} " +
               "tp=#{s.total_produced} tc=#{s.total_capacity}"
     station.roll_dice()
     station.update(1)
-    deepEqual [s.wip, s.produced, s.total_produced, s.total_capacity], 
-              [0, 6, 17, 19], 
+    deepEqual [s.wip, s.produced, s.total_produced, s.total_capacity],
+              [0, 6, 17, 19],
               "After 2st step, WIP=#{s.wip} produced=#{s.produced} " +
               "tp=#{s.total_produced} tc=#{s.total_capacity}"
 
 
-test 'During update, when Station 1 has 20 WIP on round 5 and its ' + 
+test 'During update, when Station 1 has 20 WIP on round 5 and its ' +
      'capacity is less than its WIP', ->
     station = @station
     station.num = 1         # station 1
@@ -112,7 +112,7 @@ test 'During update, when Station 1 has 20 WIP on round 5 and its ' +
     equal station.produced, 12, 'it produces == to its capacity'
 
 
-test 'During update, when Station 1 has 10 WIP on round 5 and its ' + 
+test 'During update, when Station 1 has 10 WIP on round 5 and its ' +
      'capacity is more than its WIP', ->
     station = @station
     station.num = 1         # station 1
@@ -133,13 +133,13 @@ test 'station 1 is active on round <= 4 when WIP = 0', ->
     @station.num = 1
     @station.wip = 0
     ok @station.is_active(4), 'Station 1, round 4, with WIP = 0'
-    
+
 
 test 'station 1 is NOT active on round >= 5 when WIP = 0', ->
     @station.num = 1
     @station.wip = 0
     ok not @station.is_active(5), 'Station 1, round 5, with WIP = 0'
-    
+
 
 test 'does not update if not active', ->
     station = @station
@@ -190,7 +190,7 @@ test 'get_efficiency', ->
 
 test 'get_missed_op (missed opportunity)', ->
     s = @station
-    equal s.get_missed_op(), 2, 'Initially missed 7 - 5 = 2' 
+    equal s.get_missed_op(), 2, 'Initially missed 7 - 5 = 2'
     s.roll_dice()       # adds 12 to total_cap -> 7 + 12 = 19
     s.update(1)         # adds 4 to total_prod -> 4 + 5 = 9
     equal s.get_missed_op(), 19 - 9, 'Misses 8 more; 12 - 4 = 8'
