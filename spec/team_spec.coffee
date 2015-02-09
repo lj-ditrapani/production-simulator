@@ -67,7 +67,7 @@ test 'make_station (station_num)', ->
 
 
 make_test_team = (num_stations, round_num, inducted_wip) ->
-    t = new team.Team num_stations, round_num, inducted_wip
+    t = new team.Team(num_stations, round_num, inducted_wip)
     for station in t.stations
         if station.num == 1
             station.dice.random = () -> 0.99    # S1 always rolls a 6
@@ -119,7 +119,7 @@ test 'Team.roll() on rounds 3 and 4: S1.capacity == S3.capacity', ->
 
 test 'Team.update() on round 1', ->
     get_state = (s) -> [
-        s.active_count, s.wip, s.capacity, s.produced, 
+        s.active_count, s.wip, s.capacity, s.produced,
         s.total_produced, s.total_capacity
     ]
     t = make_test_team 5, 1, 100
@@ -269,7 +269,7 @@ module 'team [min/max highlighting]',
     setup: ->
         # S1 always rolls 6, others roll 2
         # num_stations, round_num, inducted_wip
-        @team = make_test_team 4, 1, 10 
+        @team = make_test_team 4, 1, 10
         s1 = @team.stations[1]
         s1.total_capacity = -1
         s2 = @team.stations[2]
