@@ -93,13 +93,15 @@ TODO:
     - Use R1 R2 ... as column headings for all 4 tables
 - Add second data model for rounds 3 & 4 for:
   "Capacity of S1 matches number produced at last station".
-- Config --- add dopdown:
+- Config --- add drop down:
   Round 3 & 4 constraint for S1 capacity:
     - a) Capacity of S1 matches number produced at S3 of previous round.
     - b) Capacity of S1 matches number produced at last station of
       previous round.
-
-  Causes 'Run' page to display one or the other data-model for R3 & R4
+    - In both cases, capacity of S1 for step 1 is what it rolls.
+    - In both cases, capacity of S1 for step 1 is 4.
+    - The drop down causes the 'Run' page to display one or the other
+      data-model for R3 & R4.
 - Rename Summary page to "Summary with S1 & S3 linked"
 - Add second summary page:  "Summary with S1 & last station linked"
 - Add Comparison page:  Avg WIP & produced for both data models
