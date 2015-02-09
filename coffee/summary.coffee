@@ -28,21 +28,29 @@ class sim.Summary
         # wip/prod, H/Avg/L wip/prod, s3 missed op, utilization
         if round_num > NUM_ROUNDS or round_num < 1
             return
-        @update_wip_prod round_num, teams 
-        @update_missed_op3 round_num, teams 
+        @update_wip round_num, teams
+        @update_prod round_num, teams
+        @update_missed_op3 round_num, teams
         @update_utilization round_num, teams, step_num
         @update_efficiency round_num, teams
 
-    update_wip_prod: (round_num, teams) ->
+    update_wip: (round_num, teams) ->
         s = this
         round_index = round_num - 1
-        update_team_values = (team_index) ->
+        update_team_wip = (team_index) ->
             team = teams[team_index]
             total_wip = team.get_total_wip()
             s.wip[team_index][round_index] = total_wip
+        map update_team_wip, [0...teams.length]
+
+    update_prod: (round_num, teams) ->
+        s = this
+        round_index = round_num - 1
+        update_team_prod = (team_index) ->
+            team = teams[team_index]
             total_produced = team.get_total_produced()
             s.produced[team_index][round_index] = total_produced
-        map update_team_values, [0...teams.length]
+        map update_team_prod, [0...teams.length]
 
     update_missed_op3: (round_num, teams) ->
         round_index = round_num - 1
@@ -64,46 +72,62 @@ class sim.Summary
             @efficiency[station_index][round_index] = val
 
     display: (teams) ->
-        @display_wip_prod()
-        @display_average()
+        @display_wip()
+        @display_prod()
+        @display_average_wip()
+        @display_average_prod()
         @display_missed_op3 teams
         @display_utilization teams
         @display_efficiency teams
 
-    display_wip_prod: () ->
-        reset_table 'wip_prod'
-        funcs = ['get_wip', 'get_prod']
+    display_wip: () ->
+        reset_table 'wip'
+        func = 'get_wip'
         attrs = {className: 'wip'}
         bound = @wip.length
-        make_body(this, null, 'wip_prod', bound, funcs, 'T', attrs)
+        make_body(this, null, 'wip', bound, func, 'T', attrs)
 
-    display_average: () ->
+    display_prod: () ->
+        reset_table 'prod'
+        func = 'get_prod'
+        attrs = {className: 'prod'}
+        bound = @produced.length
+        make_body(this, null, 'prod', bound, func, 'T', attrs)
+
+    display_average_wip: () ->
         # H/Avg/L X rounds
-        reset_table 'average'
-        funcs = ['get_avg_wip', 'get_avg_prod']
+        reset_table 'average_wip'
+        func = 'get_avg_wip'
         attrs = {className: 'wip'}
-        make_body(this, null, 'average', 3, funcs, '', attrs)
+        make_body(this, null, 'average_wip', 3, func, '', attrs)
+
+    display_average_prod: () ->
+        # H/Avg/L X rounds
+        reset_table 'average_prod'
+        func = 'get_avg_prod'
+        attrs = {className: 'prod'}
+        make_body(this, null, 'average_prod', 3, func, '', attrs)
 
     display_missed_op3: (teams) ->
         # teams X rounds (Station 3 only!)
         reset_table 'missed_op3'
         bound = teams.length
-        funcs = ['get_missed_op3']
-        make_body(this, teams, 'missed_op3', bound, funcs, 'T', {})
+        func = 'get_missed_op3'
+        make_body(this, teams, 'missed_op3', bound, func, 'T', {})
 
     display_utilization: (teams) ->
         # station X round (average utilization across teams)
         name = 'summary_util'
         reset_table name
-        funcs = ['get_utilization']
-        make_body(this, teams, name, @NUM_STATIONS, funcs, 'S', {})
+        func = 'get_utilization'
+        make_body(this, teams, name, @NUM_STATIONS, func, 'S', {})
 
     display_efficiency: (teams) ->
         # station X round (average efficiency across teams)
         name = 'summary_efficiency'
         reset_table name
-        funcs = ['get_efficiency']
-        make_body(this, teams, name, @NUM_STATIONS, funcs, 'S', {})
+        func = 'get_efficiency'
+        make_body(this, teams, name, @NUM_STATIONS, func, 'S', {})
 
     get_wip: (teams, i, j, label) ->
         @wip[i][j]
@@ -176,24 +200,21 @@ reset_table = (name) ->
     dom.add $ name + '_thead', [h_row]
 
 
-make_body = (summary, teams, name, bound, funcs, letter, attrs) ->
-        make_row = (i) ->
-            labels = ['High', 'Avg', 'Low']
-            label = if letter == ''
-                labels[i]
-            else
-                letter + (i + 1)
-            tds = [dom.create 'td', {className: 'team'}, [label]]
-            make_td = (j) ->
-                value = summary[funcs[0]](teams, i, j, label)
-                tds.push dom.create 'td', attrs, [dom.t value]
-                if funcs.length > 1
-                    value = summary[funcs[1]](teams, i, j, label)
-                    tds.push dom.create 'td', [dom.t value]
-            map make_td, [0...NUM_ROUNDS]
-            dom.create 'tr', tds
-        rows = map make_row, [0...bound]
-        dom.add $(name + '_tbody'), rows
+make_body = (summary, teams, name, bound, func, letter, attrs) ->
+    make_row = (i) ->
+        labels = ['High', 'Avg', 'Low']
+        label = if letter == ''
+                    labels[i]
+                else
+                    letter + (i + 1)
+        tds = [dom.create 'td', {className: 'team'}, [label]]
+        make_td = (j) ->
+            value = summary[func](teams, i, j, label)
+            tds.push dom.create 'td', attrs, [dom.t value]
+        map make_td, [0...NUM_ROUNDS]
+        dom.create 'tr', tds
+    rows = map make_row, [0...bound]
+    dom.add $(name + '_tbody'), rows
 
 
 sim.summary_mod = {make_zero_grid: make_zero_grid}
