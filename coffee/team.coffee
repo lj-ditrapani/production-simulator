@@ -40,8 +40,8 @@ team.make_station = (round_num, station_num, inducted_wip) ->
 
 class team.Team
     constructor: (num_stations, @round_num, inducted_wip) ->
-        closure = (station_num) ->
-            team.make_station round_num, station_num, inducted_wip
+        closure = (station_num) =>
+            team.make_station @round_num, station_num, inducted_wip
         @stations = sim.map(closure, [1..num_stations])
         # Attach previous stations
         for i in [1...num_stations]
