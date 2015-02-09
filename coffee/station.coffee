@@ -6,7 +6,7 @@
 class sim.Dice
     # A set of dice
     constructor: (@dice_count, @min, random) ->
-        @range = 6 - min + 1
+        @range = 6 - @min + 1
         @random = if typeof random == 'undefined'
             Math.random
         else
