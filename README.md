@@ -86,9 +86,6 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
-- Split WIP & Produced into separate tables on Summary page
-    - Correct names (WIP vs Produced tables)
-    - Use R1 R2 ... as column headings for all 4 tables
 - Add second data model for rounds 3 & 4 for:
   "Capacity of S1 matches number produced at last station".
 - Config --- add drop down:
@@ -114,14 +111,14 @@ TODO:
 - Add background cell colors to Summary page.
     - Produced: blue
     - WIP: yellow
+
+Nice-to-haves
 - Provide a back button.  This is a big change and probably not really
   important.  Requires simulating/generating all data up front for
   rounds 1-5 and then the UI provides views into each round and step of
   the simulation according to how it is configured.  Need to let user
   set "MAX inducted WIP" for round 6 separately.  Then simulate/generate
   data for round 6.
-
-Nice-to-haves
 - Auto-fetch dependencies?  qunit, rhino, CoffeeScript.
   Assume python, java and sh.  Or use rake or jake instead?
 - Create functional tests
