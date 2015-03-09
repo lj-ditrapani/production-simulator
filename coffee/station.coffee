@@ -26,7 +26,7 @@ class sim.Dice
 
 class TDTags
     constructor: (
-        @capacity, @wip, @produced, @total_capacity, 
+        @capacity, @wip, @produced, @total_capacity,
         @total_produced, @missed_op, @utilization, @efficiency) ->
 
     get: (name) ->
@@ -34,8 +34,8 @@ class TDTags
 
     display: (values) ->
         # Display values of current state
-        names = ['capacity', 'wip', 'produced', 'total_capacity', 
-                 'total_produced', 'missed_op', 'utilization', 
+        names = ['capacity', 'wip', 'produced', 'total_capacity',
+                 'total_produced', 'missed_op', 'utilization',
                  'efficiency']
         for i in [0...names.length]
             dom.set_text this[names[i]], values[i]
@@ -60,8 +60,8 @@ class sim.Station
         @active_count = 0
 
     toString: () ->
-        "S#{@num} dice #{@dice} wip #{@wip} produced #{@produced} " + 
-        "capacity #{@capacity} tp #{@total_produced} " + 
+        "S#{@num} dice #{@dice} wip #{@wip} produced #{@produced} " +
+        "capacity #{@capacity} tp #{@total_produced} " +
         "tc #{@total_capacity} ac #{@active_count}"
 
     set_dice_count: (dice_count) ->
@@ -89,7 +89,7 @@ class sim.Station
             [@capacity, 0]
         else if @capacity > @wip
             [@wip, 0]
-        else 
+        else
             [@capacity, @wip - @capacity]
 
     update: (round_num) ->
@@ -125,10 +125,10 @@ class sim.Station
         # Missed opportunity
         @total_capacity - @total_produced
 
-    add_tds: (capacity, wip, produced, total_capacity, 
+    add_tds: (capacity, wip, produced, total_capacity,
               total_produced, missed_op, utilization, efficiency) ->
-        @tds = new TDTags(capacity, wip, produced, total_capacity, 
-                          total_produced, missed_op, utilization, 
+        @tds = new TDTags(capacity, wip, produced, total_capacity,
+                          total_produced, missed_op, utilization,
                           efficiency)
 
     get_td: (name) ->

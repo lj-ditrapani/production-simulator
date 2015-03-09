@@ -182,7 +182,7 @@ make_table = (name, num_teams, num_stations) ->
 
 display = (step_num, teams) ->
     # Display state of stations and totals in all tables
-    # tables: capacity, produced, wip, total_capacity, total_wips, 
+    # tables: capacity, produced, wip, total_capacity, total_wips,
     # total_produced, missed_op, utilization, and efficiency
     dom.set_text($('step_number_label'), step_num)
     for team in teams

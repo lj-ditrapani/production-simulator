@@ -52,7 +52,7 @@ class team.Team
         @stations[num - 1]
 
     roll: () ->
-        # If on round >= 5 & no more wip to induce (station 1 WIP = 0), 
+        # If on round >= 5 & no more wip to induce (station 1 WIP = 0),
         # move resources from s1 to s3, so station 3 has 2 dice
         s1 = @get_station(1)
         s3 = @get_station(3)
