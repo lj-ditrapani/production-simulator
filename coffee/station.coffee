@@ -38,7 +38,7 @@ class TDTags
                  'total_produced', 'missed_op', 'utilization',
                  'efficiency']
         for i in [0...names.length]
-            dom.set_text this[names[i]], values[i]
+            ljd.setText this[names[i]], values[i]
 
     highlight: (field_name) ->
         this[field_name].className = 'highlight'

@@ -38,9 +38,9 @@ def insert_head(head_text, template_body):
 
 def make_sim_file():
     head_template = read_file('../template_head.html')
-    head, rest = head_template.split('//utils out main', 1)
+    head, rest = head_template.split('//ljd-utils out main', 1)
     middle, tail = rest.split('/*sim.css*/')
-    code = read_files('utils', 'out', 'main')
+    code = read_files('ljd-utils', 'out', 'main')
     css = read_file('../sim.css')
     final_head_text = ''.join([head, code, middle, css, tail])
     make_html_file(final_head_text, '../sim.html')

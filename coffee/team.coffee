@@ -34,7 +34,7 @@ team.make_station = (round_num, station_num, inducted_wip) ->
     wip = team.initial_wip round_num, station_num, inducted_wip
     station = new sim.Station station_num, dice_count, min, wip
     # Attach the 'table data' cells that belong to this station
-    station.add_tds.apply station, (dom.create 'td' for i in [1..8])
+    station.add_tds.apply station, (ljd.create 'td' for i in [1..8])
     station
 
 
@@ -46,7 +46,7 @@ class team.Team
         # Attach previous stations
         for i in [1...num_stations]
             @stations[i].prev = @stations[i - 1]
-        @total_wip_td = dom.create 'td'
+        @total_wip_td = ljd.create 'td'
 
     get_station: (num) ->
         @stations[num - 1]
@@ -75,7 +75,7 @@ class team.Team
         for station in @stations
             station.display(step_num, @round_num)
         @update_highlighting()
-        dom.set_text @total_wip_td, @get_total_wip()
+        ljd.setText @total_wip_td, @get_total_wip()
 
     update_highlighting: () ->
         @clear_highlights_from_stations()

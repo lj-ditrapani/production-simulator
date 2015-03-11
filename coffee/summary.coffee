@@ -185,19 +185,19 @@ compute_efficiency = (station_num, teams) ->
 
 
 reset_table = (name) ->
-    dom.removeAllChildren $ name + '_thead'
-    dom.removeAllChildren $ name + '_tbody'
-    ths = [dom.create 'th' ]
+    ljd.removeAllChildren ljd.$(name + '_thead')
+    ljd.removeAllChildren ljd.$(name + '_tbody')
+    ths = [ljd.create 'th' ]
     make_th = if name in ['wip_prod', 'average']
         (i) ->
-            ths.push dom.create 'th', ["W" + (i + 1)]
-            ths.push dom.create 'th', ["P" + (i + 1)]
+            ths.push ljd.create 'th', ["W" + (i + 1)]
+            ths.push ljd.create 'th', ["P" + (i + 1)]
     else
         (i) ->
-            ths.push dom.create 'th', ["R" + (i + 1)]
+            ths.push ljd.create 'th', ["R" + (i + 1)]
     map make_th, [0...NUM_ROUNDS]
-    h_row = dom.create 'tr', ths
-    dom.add $ name + '_thead', [h_row]
+    h_row = ljd.create 'tr', ths
+    ljd.add ljd.$(name + '_thead'), [h_row]
 
 
 make_body = (summary, teams, name, bound, func, letter, attrs) ->
@@ -207,14 +207,14 @@ make_body = (summary, teams, name, bound, func, letter, attrs) ->
                     labels[i]
                 else
                     letter + (i + 1)
-        tds = [dom.create 'td', {className: 'team'}, [label]]
+        tds = [ljd.create 'td', {className: 'team'}, [label]]
         make_td = (j) ->
             value = summary[func](teams, i, j, label)
-            tds.push dom.create 'td', attrs, [dom.t value]
+            tds.push ljd.create 'td', attrs, [ljd.t value]
         map make_td, [0...NUM_ROUNDS]
-        dom.create 'tr', tds
+        ljd.create 'tr', tds
     rows = map make_row, [0...bound]
-    dom.add $(name + '_tbody'), rows
+    ljd.add ljd.$(name + '_tbody'), rows
 
 
 sim.summary_mod = {make_zero_grid: make_zero_grid}

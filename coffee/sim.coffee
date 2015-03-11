@@ -3,8 +3,8 @@
 
 
 ready = () ->
-    $('num_teams').value = sim.num_teams
-    $('num_stations').value = sim.num_stations
+    ljd.$('num_teams').value = sim.num_teams
+    ljd.$('num_stations').value = sim.num_stations
     sim.summary = new sim.Summary sim.num_teams, sim.num_stations
     sim.setup()
 
@@ -65,7 +65,7 @@ hide = (id) ->
 
 
 change_class = (id, className) ->
-    $(id).className = className
+    ljd.$(id).className = className
 
 
 remove = (list, el_to_remove) ->
@@ -114,21 +114,21 @@ sim.setup = () ->
         sim.num_stations = num_stations
         sim.summary = new sim.Summary num_teams, num_stations
     sim.round_num = get_input 'round_num'
-    dom.set_text($('round_num_label'), sim.round_num)
+    ljd.setText(ljd.$('round_num_label'), sim.round_num)
     sim.num_steps = get_input 'num_steps'
     sim.step_num = 0
-    dom.set_text $('step_number_label'), sim.step_num
+    ljd.setText ljd.$('step_number_label'), sim.step_num
     sim.inducted_wip = get_input 'inducted_wip'
     generate_sim num_teams, num_stations
 
 
 get_input = (name) ->
     # input validation
-    value = parseInt $(name).value, 10
+    value = parseInt ljd.$(name).value, 10
     if is_value_ok(name, value)
         value
     else
-        $(name).value = default_values[name]
+        ljd.$(name).value = default_values[name]
         default_values[name]
 
 
@@ -157,34 +157,34 @@ generate_sim = (num_teams, num_stations) ->
 make_table = (name, num_teams, num_stations) ->
     # name = capacity | produced wip | total_capacity | total_produced
     #        | missed_op | utilization | efficiency
-    table = $ name + '_table'
-    dom.removeAllChildren table
+    table = ljd.$ name + '_table'
+    ljd.removeAllChildren table
     make_row = (index) ->
         # Returns a tr element with all td children
         team = sim.teams[index]
         tds = team.get_table_row name
         attrs = {className: 'team'}
-        tds.unshift dom.create 'td', attrs, ['T' + (index + 1)]
-        dom.create 'tr', tds
+        tds.unshift ljd.create 'td', attrs, ['T' + (index + 1)]
+        ljd.create 'tr', tds
     # returns list of row nodes
     rows = map make_row, [0...num_teams]
     make_th = (i) ->
-        dom.create 'th', ['S' + (i + 1)]
+        ljd.create 'th', ['S' + (i + 1)]
     ths = map make_th, [0...num_stations]
-    ths.unshift dom.create 'th'
+    ths.unshift ljd.create 'th'
     if name == 'wip'
-        ths.push dom.create 'th', ['Total']
-    h_row = dom.create 'tr', ths
-    head = dom.create 'thead', [h_row]
-    body = dom.create 'tbody', rows
-    dom.add table, [head, body]
+        ths.push ljd.create 'th', ['Total']
+    h_row = ljd.create 'tr', ths
+    head = ljd.create 'thead', [h_row]
+    body = ljd.create 'tbody', rows
+    ljd.add table, [head, body]
 
 
 display = (step_num, teams) ->
     # Display state of stations and totals in all tables
     # tables: capacity, produced, wip, total_capacity, total_wips,
     # total_produced, missed_op, utilization, and efficiency
-    dom.set_text($('step_number_label'), step_num)
+    ljd.setText(ljd.$('step_number_label'), step_num)
     for team in teams
         team.display(step_num)
 
