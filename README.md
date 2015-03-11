@@ -101,9 +101,6 @@ TODO:
 - Add second summary page:  "Summary with S1 & last station linked"
 - Add Comparison page:  Avg WIP & produced for both data models
   (from second table in Summary)
-- Prevent double-clicking of Step button on Run page.
-  Disable button on click and attach callback.  After 0.5 seconds,
-  enable button?
 
 Nice-to-haves
 - Provide a back button.  This is a big change and probably not really

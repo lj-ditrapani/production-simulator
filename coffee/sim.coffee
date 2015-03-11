@@ -85,6 +85,7 @@ sim.simulate = () ->
 sim.step_ = () ->
     # Execute one step (roll) of the current round & display results
     # step is reserved in firefox, must use step_
+    temporarily_disable_step_button()
     if sim.lock_num_steps and sim.step_num == sim.num_steps
         return
     step_data(sim.round_num, sim.teams)
@@ -92,6 +93,15 @@ sim.step_ = () ->
     #         curr_wip, total_wips
     display(sim.step_num, sim.teams)
     sim.summary.display(sim.teams)
+
+
+temporarily_disable_step_button = () ->
+  ljd.$('step_button').disabled = true
+  setTimeout(enable_step_button, 750)
+
+
+enable_step_button = () ->
+  ljd.$('step_button').disabled = false
 
 
 step_data = (round_num, teams) ->
