@@ -155,7 +155,7 @@ generate_sim = (num_teams, num_stations) ->
 
 
 make_table = (name, num_teams, num_stations) ->
-    # name = capacity | produced wip | total_capacity | total_produced
+    # name = capacity | produced | wip | total_capacity | total_produced
     #        | missed_op | utilization | efficiency
     table = ljd.$ name + '_table'
     ljd.removeAllChildren table
@@ -164,7 +164,7 @@ make_table = (name, num_teams, num_stations) ->
         team = sim.teams[index]
         tds = team.get_table_row name
         attrs = {className: 'team'}
-        tds.unshift ljd.create 'td', attrs, ['T' + (index + 1)]
+        tds.unshift ljd.create('td', attrs, ['T' + (index + 1)])
         ljd.create 'tr', tds
     # returns list of row nodes
     rows = map make_row, [0...num_teams]

@@ -90,7 +90,7 @@ class sim.Summary
     display_prod: () ->
         reset_table 'prod'
         func = 'get_prod'
-        attrs = {className: 'prod'}
+        attrs = {className: 'produced'}
         bound = @produced.length
         make_body(this, null, 'prod', bound, func, 'T', attrs)
 
@@ -105,7 +105,7 @@ class sim.Summary
         # H/Avg/L X rounds
         reset_table 'average_prod'
         func = 'get_avg_prod'
-        attrs = {className: 'prod'}
+        attrs = {className: 'produced'}
         make_body(this, null, 'average_prod', 3, func, '', attrs)
 
     display_missed_op3: (teams) ->

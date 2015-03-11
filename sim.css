@@ -64,6 +64,11 @@ td.team
 
 td.wip
 {
+    background-color: #ff0;
+}
+
+td.produced
+{
     background-color: #CCF0FF;
 }
 

@@ -28,6 +28,8 @@ class TDTags
     constructor: (
         @capacity, @wip, @produced, @total_capacity,
         @total_produced, @missed_op, @utilization, @efficiency) ->
+        @wip.className = 'wip'
+        @produced.className = 'produced'
 
     get: (name) ->
         this[name]

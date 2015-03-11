@@ -104,13 +104,6 @@ TODO:
 - Prevent double-clicking of Step button on Run page.
   Disable button on click and attach callback.  After 0.5 seconds,
   enable button?
-- Add background cell colors to Run page.
-    - Capacity: white
-    - Produced: blue
-    - WIP: yellow
-- Add background cell colors to Summary page.
-    - Produced: blue
-    - WIP: yellow
 
 Nice-to-haves
 - Provide a back button.  This is a big change and probably not really
