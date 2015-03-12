@@ -5,6 +5,7 @@
 ready = () ->
     ljd.$('num_teams').value = sim.num_teams
     ljd.$('num_stations').value = sim.num_stations
+    ljd.$('s1_capacity_constraint').value = sim.s1_capacity_constraint
     sim.summary = new sim.Summary sim.num_teams, sim.num_stations
     sim.setup()
 
@@ -18,7 +19,8 @@ window.sim = {
     step_num: 0,        # Current step number
     teams: [],          # Only individual stations are updated
     inducted_wip: 85,   # How much total wip to induce on rounds >= 5
-    lock_num_steps: false,      # Do not allow stepping past num_steps
+    lock_num_steps: false,       # Do not allow stepping past num_steps
+    s1_capacity_constraint: 'S3' # Capacity constraint of S1 for R3 & R4
 }
 
 
@@ -119,10 +121,15 @@ sim.setup = () ->
     # Set-up simulation round based on configuration
     num_teams = get_input 'num_teams'
     num_stations = get_input 'num_stations'
-    if num_teams != sim.num_teams or num_stations != sim.num_stations
+    s1_capacity_constraint = ljd.$('s1_capacity_constraint').value
+    if num_teams != sim.num_teams or
+       num_stations != sim.num_stations or
+       s1_capacity_constraint != sim.s1_capacity_constraint
         sim.num_teams = num_teams
         sim.num_stations = num_stations
+        sim.s1_capacity_constraint = s1_capacity_constraint
         sim.summary = new sim.Summary num_teams, num_stations
+    set_visibility_of_rules_in_documentation s1_capacity_constraint
     sim.round_num = get_input 'round_num'
     ljd.setText(ljd.$('round_num_label'), sim.round_num)
     sim.num_steps = get_input 'num_steps'
@@ -149,6 +156,16 @@ is_value_ok = (name, value) ->
         false
     else
         true
+
+
+set_visibility_of_rules_in_documentation = (s1_capacity_constraint) ->
+  [rules_to_show, rules_to_hide] =
+      if s1_capacity_constraint == "S3"
+          ['rules_with_s3', 'rules_with_last_station']
+      else
+          ['rules_with_last_station', 'rules_with_s3']
+  ljd.$(rules_to_show).className = ''
+  ljd.$(rules_to_hide).className = 'invisible'
 
 
 generate_sim = (num_teams, num_stations) ->

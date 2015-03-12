@@ -44,13 +44,25 @@
                 <input name="inducted_wip" id="inducted_wip" value="85"
                        class="number_entry" type="text" />
             </div>
+            <div class="control">
+                <div> R3 &amp; R4 S1 Capacity Constraint </div>
+                <select name="s1_capacity_constraint"
+                        id="s1_capacity_constraint" >
+                    <option value="S3">
+                       match produced at S3
+                    </option>
+                    <option value="last_station">
+                       match produced at last station
+                    </option>
+                </select>
+            </div>
             <div>
                 <input id="setup_button" type="button"
                        value="Set-up Simulation"
                        onClick="sim.setup();"/>
             </div>
         </div>  <!-- End controls -->
-        </div>  <!-- End config_panel -->
+    </div>  <!-- End config_panel -->
 
 <div class="doc_button">
 <input type="button" value="Hide Documentation"
@@ -66,7 +78,7 @@ Rules for each round:
 
 <!-- ============ Documentation ==================================== -->
 <div class="doc">
-<pre>
+<pre id="rules_with_s3">
             Variation   Variation
             in          in
             capacity    capacity
@@ -74,8 +86,30 @@ Rules for each round:
 ------------------------------------------------------------------------
 Round 1:    1-6         1-6
 Round 2:    1-6         2-12
-Round 3:    1-6         2-12       Capacity of S1 matches capacity of S3
-Round 4:    4-6         2-12       Capacity of S1 matches capacity of S3
+Round 3:    1-6         2-12       Capacity of S1 matches number
+                                   produced at S3 of previous round
+Round 4:    4-6         2-12       Capacity of S1 matches number
+                                   produced at S3 of previous round
+                                   WIP at S3 is 9 instead of 4
+Round 5:    Same as round 4 but S1 cannot induct more than the "Maximum
+            Inducted WIP".  Also S1 will help S3 once S1 WIP is
+            exhausted (the capacity at S3 doubles---goes to 8-12).
+Round 6:    Same as round 5
+</pre>
+<pre id="rules_with_last_station" class="invisible">
+            Variation   Variation
+            in          in
+            capacity    capacity
+            at S3       at other stations
+------------------------------------------------------------------------
+Round 1:    1-6         1-6
+Round 2:    1-6         2-12
+Round 3:    1-6         2-12       Capacity of S1 matches number
+                                   produced at last station of previous
+                                   round
+Round 4:    4-6         2-12       Capacity of S1 matches number
+                                   produced at last station of previous
+                                   round
                                    WIP at S3 is 9 instead of 4
 Round 5:    Same as round 4 but S1 cannot induct more than the "Maximum
             Inducted WIP".  Also S1 will help S3 once S1 WIP is
