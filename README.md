@@ -86,23 +86,24 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
-- Add second data model for rounds 3 & 4 for:
-  "Capacity of S1 matches number produced at last station".
 - Config --- add drop down:
   Round 3 & 4 constraint for S1 capacity:
-    - a) Capacity of S1 matches number produced at S3 of previous round.
+    - a) Capacity of S1 matches number produced at S3 of previous step.
     - b) Capacity of S1 matches number produced at last station of
-      previous round.
-    - In both cases, capacity of S1 for step 1 is what it rolls.
+      previous step.
     - In both cases, capacity of S1 for step 1 is 4.
-    - The drop down causes the 'Run' page to display one or the other
       data-model for R3 & R4.
+    - Changes rule in Documentation to S3 or last round depending on
+      selection
+
+Nice-to-haves
+- Add second data model for rounds 3 & 4 for:
+  "Capacity of S1 matches number produced at last station".
+    - The drop down causes the 'Run' page to display one or the other
 - Rename Summary page to "Summary with S1 & S3 linked"
 - Add second summary page:  "Summary with S1 & last station linked"
 - Add Comparison page:  Avg WIP & produced for both data models
   (from second table in Summary)
-
-Nice-to-haves
 - Provide a back button.  This is a big change and probably not really
   important.  Requires simulating/generating all data up front for
   rounds 1-5 and then the UI provides views into each round and step of
