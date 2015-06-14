@@ -39,7 +39,7 @@ test 'roll_dice', ->
 test 'When a station updates', ->
     station = @station
     station.roll_dice()
-    station.update(1)
+    station.update(1)     # Round #1
     equal station.total_produced, 5 + 4, ('The new total_produced =' +
         ' the previous total_produced + what it produced this step')
     equal station.total_capacity, 7 + 12, ('The new total_capacity =' +

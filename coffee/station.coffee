@@ -139,9 +139,9 @@ class sim.Station
     display: (step_num, round_num) ->
         # Display values of current state
         new_wip = if  @num == 1 and round_num < 5
-            'N/A'
-        else
-            @wip;
+                      'N/A'
+                  else
+                      @wip
         @tds.display [@capacity,
                       new_wip,
                       @produced,
