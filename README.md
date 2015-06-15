@@ -86,6 +86,15 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
+- New build process using only node
+  - commit
+  - Force output file to write dos newlines instead of unix
+    - fs parameter?, search and replace \n for \r\n??
+  - delete old, unnecessary files
+  - add download dependencies task
+    - qunit.css, qunit.js, coffee-script.js
+    - Are they already npm modules to download?
+  - Update readme to use new build steps
 - Config --- add drop down:
   Round 3 & 4 constraint for S1 capacity:
     - a) Capacity of S1 matches number produced at S3 of previous step.
