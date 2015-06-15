@@ -46,5 +46,7 @@ gulp.task('build', ->
   template = fs.readFileSync './template.html', 'utf8'
   data = {js: js, css: css, file: ''}
   str = gutil.template(template, data)
+  # Force dos newlines so Microsoft "Mark of the Web" (MotW) works
+  str = str.replace(/\n/g, "\r\n")
   fs.writeFileSync('./sim.html', str)
 )
