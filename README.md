@@ -87,8 +87,6 @@ Nice-to-haves
   the simulation according to how it is configured.  Need to let user
   set "MAX inducted WIP" for round 6 separately.  Then simulate/generate
   data for round 6.
-- Auto-fetch dependencies?  qunit, rhino, CoffeeScript.
-  Assume python, java and sh.  Or use rake or jake instead?
 - Create functional tests
     Although we have unit tests for the internal logic,
     it would be nice to have user-level functional tests to verify that
@@ -103,14 +101,6 @@ Ideas
 - Use angularjs?  Number of teams and number of stations become ng-model
   and create the table dimensions which are bound in the HTML template
   variables using ng-repeat.
-- Compile Using node.js
-  Provide alternate build (compile) via node.js.
-  Compiles CoffeeScript -> JavaScript and inserts final JavaScript and
-  CSS into `sim_template.html` to produce standalone sim.html
-  (currently uses rhino, shell, & python to accomplish this).
-  First attempt: `compile_node.sh` is not correct because it does not
-  use one module per file.
-  Need to compile each file separately and then join them together.
 
 Other ideas (testing only?)
 - "Show all panels" button (make config, run, results & summary visible
