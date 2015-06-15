@@ -54,6 +54,9 @@ gulp.task('build', ->
 )
 
 gulp.task('get-dependencies', ->
+  path = './lib'
+  if !fs.existsSync(path)
+    fs.mkdirSync(path)
   ljdUtils = (
     'https://raw.githubusercontent.com/lj-ditrapani/ljd-utils/' +
     'e548a01a5bbd706df6daf3aa33b0c0d275b7a825/ljd-utils.js'
