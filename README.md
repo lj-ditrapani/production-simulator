@@ -4,7 +4,7 @@ Production Simulator
 Author: Lyall Jonathan Di Trapani
 
 To use the production simulator, go to http://ditrapani.info/sim.html.
-You may download the sim.html file for offline use.
+You may download the sim.html file for off-line use.
 
 This is a browser-based, production simulator that illustrates
 constraint theory and project management concepts, specifically
@@ -13,7 +13,7 @@ Project Management Foundational Concepts.
 AFIT/LS:  School of Systems and Logistics.
 
 
-Dependencies
+Build Dependencies
 ------------------------------------------------------------------------
 First install node.js and npm.  Then install gulp globally so it is
 available at the command line.
@@ -42,15 +42,15 @@ blocked content if prompted) or host on a web-server to allow online
 access.
 
 
-Test CoffeeSript code
+Test CoffeeScript code
 ------------------------------------------------------------------------
-To test the CoffeeSript code, open `spec_runner.html` in a web-browser
+To test the CoffeeScript code, open `spec_runner.html` in a web-browser
 (ensure you allow blocked content if prompted).
 
 
 Directories
 ------------------------------------------------------------------------
-- **coffee**:   production CoffeeSript code
+- **coffee**:   production CoffeeScript code
 - **js**:       production JavaScript code
 - **lib**:      3rd party libraries for testing (JavaScript, css)
                 qunit.css qunit.js coffee-script.js
@@ -61,7 +61,7 @@ Understanding the different HTML files
 ------------------------------------------------------------------------
 - `template.html`:       template used to produce `sim.html`
 - `sim.html`:            actual stand-alone product
-- `spec_runner.html`:    runs all CoffeeSript qUnit tests
+- `spec_runner.html`:    runs all CoffeeScript qUnit tests
 
 
 TODO:
