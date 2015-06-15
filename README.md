@@ -87,7 +87,6 @@ Understanding the different HTML files
 TODO:
 ------------------------------------------------------------------------
 - New build process using only node
-  - Lock versions in package.json (coffeescript 1.9.3, ect)
   - Update readme to use new build steps
   - Delete everything and clone repo, test readme steps
 - Config --- add drop down:
