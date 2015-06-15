@@ -14,14 +14,10 @@ gulp.task('default', ->
 )
 
 gulp.task('lint', ->
-  runSequence('coffee-lint')
-)
-
-gulp.task('coffee-lint', ->
   files = ['./coffee/*.coffee', './spec/*.coffee', './gulpfile.coffee']
   gulp.src(files)
-    .pipe(coffeelint())
-    .pipe(coffeelint.reporter())
+    .pipe coffeelint()
+    .pipe coffeelint.reporter()
 )
 
 gulp.task('coffee-compile', ->
@@ -42,7 +38,7 @@ gulp.task('join-js', ->
     .pipe gulp.dest('./js')
 )
 
-gulp.task('build', ->
+gulp.task('build', (done) ->
   js = fs.readFileSync './js/all.js', 'utf8'
   css = fs.readFileSync './sim.css', 'utf8'
   template = fs.readFileSync './template.html', 'utf8'
@@ -51,9 +47,10 @@ gulp.task('build', ->
   # Force dos newlines so Microsoft "Mark of the Web" (MotW) works
   str = str.replace(/\n/g, "\r\n")
   fs.writeFileSync('./sim.html', str)
+  done()
 )
 
-gulp.task('get-dependencies', ->
+gulp.task('get-dependencies', (done) ->
   path = './lib'
   if !fs.existsSync(path)
     fs.mkdirSync(path)
@@ -74,4 +71,5 @@ gulp.task('get-dependencies', ->
   download coffee, './lib/coffee-script.js', https
   download qunitjs, './lib/qunit.js', http
   download qunitcss, './lib/qunit.css', http
+  done()
 )
