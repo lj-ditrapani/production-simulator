@@ -15,7 +15,10 @@ AFIT/LS:  School of Systems and Logistics.
 
 Dependencies
 ------------------------------------------------------------------------
-Install node.js and npm.
+First install node.js and npm.  Then install gulp globally so it is
+available at the command line.
+
+    $ npm install -g gulp
 
 The dependencies are only needed for building the actual sim.html
 as well as running the tests.
@@ -102,11 +105,11 @@ Ideas
   and create the table dimensions which are bound in the HTML template
   variables using ng-repeat.
 
-Other ideas (testing only?)
-- "Show all panels" button (make config, run, results & summary visible
+Other ideas (for faster manual testing only)
+- A testing mode "Show all panels" button
+  (make config, run, results & summary visible
   at same time).  If you click on config, run, results, or summary
   buttons, it hides the other panels automatically
-  Only useful in `sim_coffee.html` for quick testing
 - Simulate all rounds:  run simulation for rounds 1-6 in sequence for
   current config (is this useful outside of testing?)
     setup()
