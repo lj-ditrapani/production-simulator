@@ -87,10 +87,13 @@ Understanding the different HTML files
 TODO:
 ------------------------------------------------------------------------
 - New build process using only node
-  - delete old, unnecessary files
+  - make ljd-utils a dependency
+    - get latest version ljd-utils (compare)
+    - ignore js/ljd-utils
   - add download dependencies task
     - qunit.css, qunit.js, coffee-script.js
     - Are they already npm modules to download?
+    - ljd-utils
   - Update readme to use new build steps
   - Delete everything and clone repo, test readme steps
 - Config --- add drop down:
