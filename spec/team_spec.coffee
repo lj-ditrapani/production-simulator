@@ -101,21 +101,24 @@ test 'Team.roll() on round 5 when station 1 has 0 WIP', ->
   equal t.get_station(1).wip, 0, 'R6: station 1 has WIP = 0'
 
 
-test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
-      'S3.capacity of previous round'), ->
-  run_test = (round, same) ->
-    t = make_test_team 5, round, 100, 'S3'
-    previous_s3_capacity = 42
-    t.set_previous_s3_capacity(previous_s3_capacity)
+(->
+  run_capacity_test = (round,
+                       same,
+                       s1_capacity_constraint,
+                       previous_station_capacity_attribute,
+                       name) ->
+    t = make_test_team 5, round, 100, s1_capacity_constraint
+    previous_station_capacity = 42
+    t[previous_station_capacity_attribute] = previous_station_capacity
     t.get_station(3).capacity = 17
     t.get_station(5).capacity = 18
     t.roll()
     s1_capacity = t.get_station(1).capacity
     if same
       label = "R#{round}: station 1 has capacity of #{s1_capacity} " +
-              'which matches the capacity of station 3 of the ' +
+              "which matches the capacity of #{name} of the " +
               'previous round'
-      equal s1_capacity, previous_s3_capacity, label
+      equal s1_capacity, previous_station_capacity, label
       s3_capacity = t.get_station(3).capacity
       s5_capacity = t.get_station(5).capacity
       equal t.previous_s3_capacity,
@@ -126,45 +129,42 @@ test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
             "last cap: #{s5_capacity}"
     else
       label = "R#{round}: station 1 has a different capacity than " +
-              "that of station 3's previous round"
-      notEqual s1_capacity, previous_s3_capacity, label
-  run_test(2, false)
-  run_test(3, true)
-  run_test(4, true)
-  run_test(5, false)
+              "that of #{name}'s previous round"
+      notEqual s1_capacity, previous_station_capacity, label
 
 
-test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
-      'S[last].capacity of previous round'), ->
-  run_test = (round, same) ->
-    t = make_test_team 5, round, 100, 'last'
-    previous_last_station_capacity = 42
-    t.set_previous_last_station_capacity(previous_last_station_capacity)
-    t.get_station(3).capacity = 17
-    t.get_station(5).capacity = 18
-    t.roll()
-    s1_capacity = t.get_station(1).capacity
-    if same
-      label = "R#{round}: station 1 has capacity of #{s1_capacity} " +
-              'which matches the capacity of station 3 of the ' +
-              'previous round'
-      equal s1_capacity, previous_last_station_capacity, label
-      s3_capacity = t.get_station(3).capacity
-      s5_capacity = t.get_station(5).capacity
-      equal t.previous_s3_capacity,
-            s3_capacity,
-            "S3 cap: #{s3_capacity}"
-      equal t.previous_last_station_capacity,
-            s5_capacity,
-            "last cap: #{s5_capacity}"
-    else
-      label = "R#{round}: station 1 has a different capacity than " +
-              "that of station 3's previous round"
-      notEqual s1_capacity, previous_last_station_capacity, label
-  run_test(2, false)
-  run_test(3, true)
-  run_test(4, true)
-  run_test(5, false)
+  run_s3_capacity_test = (round, same) ->
+    attribute_name = 'previous_s3_capacity'
+    run_capacity_test round, same, 'S3', attribute_name, 'station 3'
+
+  run_last_station_capacity_test = (round, same) ->
+    attribute_name = 'previous_last_station_capacity'
+    name = 'the last station'
+    run_capacity_test round, same, 'last', attribute_name, name
+
+
+  capacity_test_cases = [
+      [2, false]
+      [3, true]
+      [4, true]
+      [5, false]
+  ]
+
+
+  run_function_on_cases = (test_function) ->
+    for [round, same] in capacity_test_cases
+      test_function round, same
+
+
+  test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
+        'S3.capacity of previous round'), ->
+    run_function_on_cases run_s3_capacity_test
+
+
+  test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
+        'S[last].capacity of previous round'), ->
+    run_function_on_cases run_last_station_capacity_test
+)()
 
 
 test 'Team.update() on round 1', ->

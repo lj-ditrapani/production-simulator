@@ -59,12 +59,6 @@ class team.Team
   set_s1_capacity_constraint: (name) ->
     @s1_capacity_constraint = name
 
-  set_previous_s3_capacity: (previous_s3_capacity) ->
-    @previous_s3_capacity = previous_s3_capacity
-
-  set_previous_last_station_capacity: (previous_last_station_capacity) ->
-    @previous_last_station_capacity = previous_last_station_capacity
-
   roll: () ->
     # If on round >= 5 & no more wip to induce (station 1 WIP = 0),
     # move resources from s1 to s3, so station 3 has 2 dice

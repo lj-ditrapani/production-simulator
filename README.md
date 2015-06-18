@@ -66,21 +66,6 @@ Understanding the different HTML files
 
 TODO:
 ------------------------------------------------------------------------
-- Config --- add drop down:
-  Round 3 & 4 constraint for S1 capacity:
-    - a) Capacity of S1 matches number produced at S3 of previous step.
-    - b) Capacity of S1 matches number produced at last station of
-      previous step.
-    - In both cases, capacity of S1 for step 1 is 4.
-    - Howto
-        - Add specs in team_spec
-        - Make changes in team.roll
-        - init previous s3/last capacity to 4
-        - make new team.Team take s1_cap_constraint as 4th arg
-        - Refactor new tests
-        - remove setters for previous capacities and use attributes directly
-    - What does round 4 mean with wip 9???
-
 Nice-to-haves
 - Add second data model for rounds 3 & 4 for:
   "Capacity of S1 matches number produced at last station".
