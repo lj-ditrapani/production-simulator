@@ -135,7 +135,7 @@ sim.setup = () ->
   sim.step_num = 0
   ljd.setText ljd.$('step_number_label'), sim.step_num
   sim.inducted_wip = get_input 'inducted_wip'
-  generate_sim num_teams, num_stations
+  generate_sim num_teams, num_stations, s1_capacity_constraint
 
 
 get_input = (name) ->
@@ -167,12 +167,13 @@ set_visibility_of_rules_in_documentation = (s1_capacity_constraint) ->
   ljd.$(rules_to_hide).className = 'invisible'
 
 
-generate_sim = (num_teams, num_stations) ->
+generate_sim = (num_teams, num_stations, s1_capacity_constraint) ->
   # create stations, teams, and tables for simulation
   sim.teams = sim.team.make_teams num_teams,
                                   num_stations,
                                   sim.round_num,
-                                  sim.inducted_wip
+                                  sim.inducted_wip,
+                                  s1_capacity_constraint
   display(sim.step_num, sim.teams)
   names = ['capacity', 'produced', 'wip', 'total_capacity',
            'total_produced', 'missed_op', 'utilization', 'efficiency']

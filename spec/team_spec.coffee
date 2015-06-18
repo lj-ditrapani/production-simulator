@@ -66,8 +66,8 @@ test 'make_station (station_num)', ->
   equal station.dice.dice_count, 2, 's1.dice.dice_count = 2'
 
 
-make_test_team = (num_stations, round_num, inducted_wip) ->
-  t = new team.Team(num_stations, round_num, inducted_wip)
+make_test_team = (num_stations, round_num, inducted_wip, cc='S3') ->
+  t = new team.Team(num_stations, round_num, inducted_wip, cc)
   for station in t.stations
     if station.num == 1
       station.dice.random = () -> 0.99    # S1 always rolls a 6
@@ -76,12 +76,15 @@ make_test_team = (num_stations, round_num, inducted_wip) ->
   t
 
 
-test 'Team and attach previous', ->
+test 'Team and attach previous and S1 capacity constraint', ->
   t = make_test_team 5, 1, 100
   equal t.stations.length, 5, 'team is correct length'
   equal typeof t.get_station(1).prev, 'undefined'
   equal t.get_station(2).prev.num, 1
   equal t.get_station(5).prev.num, 4
+  equal t.s1_capacity_constraint, 'S3'
+  equal t.previous_s3_capacity, 4
+  equal t.previous_last_station_capacity, 4
 
 
 test 'Team.roll() on round 5 when station 1 has 0 WIP', ->
@@ -98,19 +101,66 @@ test 'Team.roll() on round 5 when station 1 has 0 WIP', ->
   equal t.get_station(1).wip, 0, 'R6: station 1 has WIP = 0'
 
 
-test 'Team.roll() on rounds 3 and 4: S1.capacity == S3.capacity', ->
+test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
+      'S3.capacity of previous round'), ->
   run_test = (round, same) ->
-    t = make_test_team 5, round, 100
+    t = make_test_team 5, round, 100, 'S3'
+    previous_s3_capacity = 42
+    t.set_previous_s3_capacity(previous_s3_capacity)
+    t.get_station(3).capacity = 17
+    t.get_station(5).capacity = 18
     t.roll()
     s1_capacity = t.get_station(1).capacity
-    s3_capacity = t.get_station(3).capacity
     if same
-      label = "R#{round}: stations 1 and 3 both have capacity " +
-              "of #{s1_capacity}"
-      equal s1_capacity, s3_capacity, label
+      label = "R#{round}: station 1 has capacity of #{s1_capacity} " +
+              'which matches the capacity of station 3 of the ' +
+              'previous round'
+      equal s1_capacity, previous_s3_capacity, label
+      s3_capacity = t.get_station(3).capacity
+      s5_capacity = t.get_station(5).capacity
+      equal t.previous_s3_capacity,
+            s3_capacity,
+            "S3 cap: #{s3_capacity}"
+      equal t.previous_last_station_capacity,
+            s5_capacity,
+            "last cap: #{s5_capacity}"
     else
-      label = "R#{round}: stations 1 and 3 have diff capacity "
-      notEqual s1_capacity, s3_capacity, label
+      label = "R#{round}: station 1 has a different capacity than " +
+              "that of station 3's previous round"
+      notEqual s1_capacity, previous_s3_capacity, label
+  run_test(2, false)
+  run_test(3, true)
+  run_test(4, true)
+  run_test(5, false)
+
+
+test ('Team.roll() on rounds 3 and 4: S1.capacity == ' +
+      'S[last].capacity of previous round'), ->
+  run_test = (round, same) ->
+    t = make_test_team 5, round, 100, 'last'
+    previous_last_station_capacity = 42
+    t.set_previous_last_station_capacity(previous_last_station_capacity)
+    t.get_station(3).capacity = 17
+    t.get_station(5).capacity = 18
+    t.roll()
+    s1_capacity = t.get_station(1).capacity
+    if same
+      label = "R#{round}: station 1 has capacity of #{s1_capacity} " +
+              'which matches the capacity of station 3 of the ' +
+              'previous round'
+      equal s1_capacity, previous_last_station_capacity, label
+      s3_capacity = t.get_station(3).capacity
+      s5_capacity = t.get_station(5).capacity
+      equal t.previous_s3_capacity,
+            s3_capacity,
+            "S3 cap: #{s3_capacity}"
+      equal t.previous_last_station_capacity,
+            s5_capacity,
+            "last cap: #{s5_capacity}"
+    else
+      label = "R#{round}: station 1 has a different capacity than " +
+              "that of station 3's previous round"
+      notEqual s1_capacity, previous_last_station_capacity, label
   run_test(2, false)
   run_test(3, true)
   run_test(4, true)
@@ -147,13 +197,17 @@ test 'make_teams', ->
   teams = team.make_teams(num_teams,
                           5,
                           1,
-                          100)
+                          100,
+                          'S3')
   equal teams.length, num_teams, '3 teams were created'
   equal teams[0].get_station(1).num, 1, 'Has get_station method'
+  equal teams[1].s1_capacity_constraint, 'S3'
+  equal teams[1].previous_s3_capacity, 4
+  equal teams[1].previous_last_station_capacity, 4
 
 
 make_test_teams = (num_teams, num_stations, round_num) ->
-  teams = team.make_teams num_teams, num_stations, round_num, 100
+  teams = team.make_teams num_teams, num_stations, round_num, 100, 'S3'
   check_dimensions teams, num_teams, num_stations
   teams
 

@@ -39,7 +39,10 @@ team.make_station = (round_num, station_num, inducted_wip) ->
 
 
 class team.Team
-  constructor: (num_stations, @round_num, inducted_wip) ->
+  constructor: (num_stations,
+                @round_num,
+                inducted_wip,
+                @s1_capacity_constraint) ->
     closure = (station_num) =>
       team.make_station @round_num, station_num, inducted_wip
     @stations = sim.map(closure, [1..num_stations])
@@ -47,24 +50,41 @@ class team.Team
     for i in [1...num_stations]
       @stations[i].prev = @stations[i - 1]
     @total_wip_td = ljd.create 'td'
+    @previous_s3_capacity = 4
+    @previous_last_station_capacity = 4
 
   get_station: (num) ->
     @stations[num - 1]
+
+  set_s1_capacity_constraint: (name) ->
+    @s1_capacity_constraint = name
+
+  set_previous_s3_capacity: (previous_s3_capacity) ->
+    @previous_s3_capacity = previous_s3_capacity
+
+  set_previous_last_station_capacity: (previous_last_station_capacity) ->
+    @previous_last_station_capacity = previous_last_station_capacity
 
   roll: () ->
     # If on round >= 5 & no more wip to induce (station 1 WIP = 0),
     # move resources from s1 to s3, so station 3 has 2 dice
     s1 = @get_station(1)
     s3 = @get_station(3)
+    last_station = @get_station(@stations.length)
     if @round_num >= 5 and s1.wip == 0
       s3.set_dice_count 2
     # Row we can roll the dice for each station, creating a new
     # capacity for this step
     for station in @stations
       station.roll_dice()
-    # fix s1 roll == s3 roll if necessary (round # == 3 or 4)
+    # Apply s1 capacity constraint if rount # == 3 or 4
     if @round_num == 3 or @round_num == 4
-      s1.capacity = s3.capacity
+      if @s1_capacity_constraint == 'S3'
+        s1.capacity = @previous_s3_capacity
+      else  # s1 capacity constraint == 'last'
+        s1.capacity = @previous_last_station_capacity
+      @previous_s3_capacity = s3.capacity
+      @previous_last_station_capacity = last_station.capacity
 
   update: () ->
     @roll()
@@ -142,6 +162,13 @@ class team.Team
     row
 
 
-team.make_teams = (num_teams, num_stations, round_num, inducted_wip) ->
-  closure = () -> new team.Team num_stations, round_num, inducted_wip
+team.make_teams = (num_teams,
+                   num_stations,
+                   round_num,
+                   inducted_wip,
+                   s1_capacity_constraint) ->
+  closure = () -> new team.Team num_stations,
+                                round_num,
+                                inducted_wip,
+                                s1_capacity_constraint
   closure() for i in [0...num_teams]
